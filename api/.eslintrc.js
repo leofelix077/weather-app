@@ -11,8 +11,6 @@ module.exports = {
     "prettier/@typescript-eslint"
   ],
   rules: {
-    // TEMPORARY!
-    // Until first migration is completed
     "@typescript-eslint/no-explicit-any": 0,
     "import/no-unresolved": 0,
     "import/named": 0,

@@ -1,16 +1,15 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "module": "commonjs",
-      "outDir": "build",
-      "isolatedModules": true,
-      "allowJs": true,
-      "jsx": "preserve",
-      "esModuleInterop": true,
-      "strict": true,
-      "noEmit": true,
-      "skipLibCheck": true
-    },
-    "include": ["src"],
-    "exclude": ["build"]
-  } 
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "outDir": "build",
+    "isolatedModules": true,
+    "allowJs": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true
+  },
+  "include": ["src", "__mocks__"]
+}
