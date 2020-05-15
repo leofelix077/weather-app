@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build-eslint-config:
+    docker:
+      - image: circleci/node:12.16.3
+    steps:
+      - checkout
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - restore_cache:
+          keys:
+            - v2-eslint-config-{{ checksum "eslint-config/yarn.lock" }}
+            - v2-eslint-config-
+      - run: cd eslint-config && yarn
+      - save_cache:
+          paths:
+            - eslint-config/node_modules
+            - ~/.cache/yarn
+          key: v2-eslint-config-{{ checksum "eslint-config/yarn.lock" }}
+      - run: cd eslint-config && npm publish
+  
+
+workflows:
+  version: 2
+  build-shared-config:
+    jobs:
+      - build-eslint-config
