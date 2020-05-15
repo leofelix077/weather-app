@@ -84,6 +84,7 @@ jobs:
   deploy-client-prod:
     docker:
       - image: garland/aws-cli-docker
+      - image: circleci/node:12.16.3
     working_directory: ~/repo
     steps:
       - attach_workspace:
