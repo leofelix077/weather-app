@@ -28,4 +28,5 @@ workflows:
           branches:
             only:
               - template
+              - /template-*/
       
