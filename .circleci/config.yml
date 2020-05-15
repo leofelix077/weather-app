@@ -23,4 +23,9 @@ workflows:
   version: 2
   build-shared-config:
     jobs:
-      - build-eslint-config
+    - build-eslint-config:
+        filters:
+          branches:
+            only:
+              - template
+      
