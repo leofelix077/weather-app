@@ -44,7 +44,7 @@
     "material-ui-pickers": "^2.2.4",
     "mdi-material-ui": "^6.14.0",
     "moment": "^2.25.3",
-    "moment-timezone": "^0.5.28",  
+    "moment-timezone": "^0.5.28",
     "prop-types": "^15.7.2",
     "react-apollo": "3.1.5",
     "react-google-maps": "^9.4.5",
@@ -71,7 +71,6 @@
     "lint-staged:eslint": "eslint",
     "lint-staged:prettier": "prettier --check"
   },
-
   "browserslist": {
     "production": [
       ">0.2%",

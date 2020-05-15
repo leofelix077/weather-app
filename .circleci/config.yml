@@ -70,33 +70,30 @@ workflows:
   version: 2
   build-shared-config:
     jobs:
-    - build-eslint-config:
-        filters:
-          tags:
-            only: /^v.*/
-          branches:
-            only:
-              - template
-              - /template-*/
+      - build-eslint-config:
+          filters:
+            tags:
+              only: /^eslint-v.*/
+            branches:
+              ignore: /.*/
 
-    - build-client
-    - deploy-client-dev:
-        context: AWS
-        requires:
-          - build-client
-        filters:
-          branches:
-            only:
-              - develop
-              - /deploy-.*/
-              - /template-*/
+      - build-client
+      - deploy-client-dev:
+          context: AWS
+          requires:
+            - build-client
+          filters:
+            branches:
+              only:
+                - develop
+                - /deploy-.*/
+                - /template-*/
 
-    - deploy-client-prod:
-        context: AWS
-        requires:
-          - build-client
-        filters:
-          branches:
-            only:
-              - master
-      
+      - deploy-client-prod:
+          context: AWS
+          requires:
+            - build-client
+          filters:
+            branches:
+              only:
+                - master
