@@ -8,8 +8,8 @@ jobs:
       - run: |
           LATEST_COMMIT=$(git rev-parse HEAD)
           FOLDER_COMMIT=$(git log -1 --format=format:%H --full-diff eslint-config)
-          if [ $FOLDER_COMMIT != $LATEST_COMMIT ];
-              echo "no folders of relevance has changed"
+          if [ "$FOLDER_COMMIT" != "$LATEST_COMMIT" ]; then
+              echo "no folders of relevance have changed"
               circleci step halt
               exit 0;
           fi
@@ -32,6 +32,14 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+      - run: |
+          LATEST_COMMIT=$(git rev-parse HEAD)
+          FOLDER_COMMIT=$(git log -1 --format=format:%H --full-diff client)
+          if [ "$FOLDER_COMMIT" != "$LATEST_COMMIT" ]; then
+              echo "no folders of relevance have changed"
+              circleci step halt
+              exit 0;
+          fi
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - restore_cache:
           keys:
