@@ -8,7 +8,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "prettier/react",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
   ],
   rules: {
     "@typescript-eslint/no-explicit-any": 0,
@@ -25,23 +25,23 @@ module.exports = {
       {
         VariableDeclarator: {
           array: true,
-          object: true
+          object: true,
         },
         AssignmentExpression: {
           array: false,
-          object: false
-        }
+          object: false,
+        },
       },
       {
-        enforceForRenamedProperties: false
-      }
+        enforceForRenamedProperties: false,
+      },
     ],
     "@typescript-eslint/explicit-function-return-type": [
       2,
       {
-        allowExpressions: true
-      }
-    ]
+        allowExpressions: true,
+      },
+    ],
   },
   overrides: [
     {
@@ -52,7 +52,7 @@ module.exports = {
         "**/*.test.tsx",
         "**/__mocks__/**.js",
         "**/__mocks__/**.ts",
-        "**/__mocks__/**.tsx"
+        "**/__mocks__/**.tsx",
       ],
       rules: {
         "global-require": 0,
@@ -60,14 +60,15 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": 0,
         "no-undef": 0,
         "jest-set/no-undef": "error",
-        "import/no-extraneous-dependencies": 0
+        "import/no-extraneous-dependencies": 0,
+        "import/extensions": 0,
       },
       globals: {
-        set: true
+        set: true,
       },
       env: {
-        jest: true
-      }
-    }
-  ]
+        jest: true,
+      },
+    },
+  ],
 };
