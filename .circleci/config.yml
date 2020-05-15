@@ -77,6 +77,8 @@ workflows:
             branches:
               ignore: /.*/
 
+  build-web-client:
+    jobs:
       - build-client
       - deploy-client-dev:
           context: AWS
