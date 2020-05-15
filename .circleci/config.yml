@@ -25,6 +25,8 @@ workflows:
     jobs:
     - build-eslint-config:
         filters:
+          tags:
+            only: /^v.*/
           branches:
             only:
               - template
