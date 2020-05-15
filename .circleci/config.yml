@@ -62,8 +62,7 @@ jobs:
 
   deploy-client-dev:
     docker:
-      - image: circleci/node:12.16.3
-      - image: garland/aws-cli-docker
+      - image: albelli/aws-codebuild-docker-images:latest
     requires:
       - build-client
     working_directory: ~/repo
@@ -85,7 +84,6 @@ jobs:
   deploy-client-prod:
     docker:
       - image: circleci/node:12.16.3
-      - image: garland/aws-cli-docker
     working_directory: ~/repo
     steps:
       - attach_workspace:
