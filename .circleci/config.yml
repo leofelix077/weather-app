@@ -5,6 +5,14 @@ jobs:
       - image: circleci/node:12.16.3
     steps:
       - checkout
+      - run: |
+          LATEST_COMMIT=$(git rev-parse HEAD)
+          FOLDER_COMMIT=$(git log -1 --format=format:%H --full-diff eslint-config)
+          if [ $FOLDER_COMMIT != $LATEST_COMMIT ];
+              echo "no folders of relevance has changed"
+              circleci step halt
+              exit 0;
+          fi
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - restore_cache:
           keys:
@@ -72,13 +80,9 @@ workflows:
     jobs:
       - build-eslint-config:
           filters:
-            tags:
-              only: /^eslint-v*/
             branches:
-              ignore: /.*/
+              only: template
 
-  build-web-client:
-    jobs:
       - build-client
       - deploy-client-dev:
           context: AWS
