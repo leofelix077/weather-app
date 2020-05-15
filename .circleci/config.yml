@@ -63,6 +63,8 @@ jobs:
   deploy-client-dev:
     docker:
       - image: garland/aws-cli-docker
+    requires:
+      - build-client
     working_directory: ~/repo
     steps:
       - attach_workspace:
