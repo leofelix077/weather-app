@@ -16,7 +16,7 @@ jobs:
             - eslint-config/node_modules
             - ~/.cache/yarn
           key: v2-eslint-config-{{ checksum "eslint-config/yarn.lock" }}
-      - run: cd eslint-config && npm publish
+      - run: cd eslint-config && npm publish --access public
   
 
 workflows:
