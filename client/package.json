@@ -54,7 +54,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:ci": "react-scripts --max_old_space_size=4096 build",
+    "build:ci": "react-scripts --max_old_space_size=4096 SKIP_PREFLIGHT_CHECK=true build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "copy-s3-dev": "aws s3 sync build/ s3://dev.bunchofnothing.com --delete --exact-timestamps",

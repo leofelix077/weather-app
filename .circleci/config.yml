@@ -73,7 +73,7 @@ workflows:
       - build-eslint-config:
           filters:
             tags:
-              only: /^eslint-v.*/
+              only: /^eslint-v*/
             branches:
               ignore: /.*/
 
