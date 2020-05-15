@@ -17,7 +17,54 @@ jobs:
             - ~/.cache/yarn
           key: v2-eslint-config-{{ checksum "eslint-config/yarn.lock" }}
       - run: cd eslint-config && npm publish --access public
-  
+
+  build-client:
+    docker:
+      - image: circleci/node:12.16.3
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      - restore_cache:
+          keys:
+            - v2-deps-bunch-of-nothing-web-{{ checksum "client/package.json" }}
+            - v2-deps-bunch-of-nothing-web-
+      - run: cd client && yarn install
+      - save_cache:
+          paths:
+            - client/node_modules
+          key: v2-deps-bunch-of-nothing-web-{{ checksum "client/package.json" }}
+      - run: |
+          cd client && yarn lint && yarn build:ci
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - client/build
+      - store_artifacts:
+          path: client/build
+          destination: client-build.zip
+
+  deploy-client-dev:
+    docker:
+      - image: garland/aws-cli-docker
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Deploy to S3 dev bucket
+          command: aws s3 sync client/build s3://dev.bunchofnothing.com --delete --exact-timestamps
+
+  deploy-client-prod:
+    docker:
+      - image: garland/aws-cli-docker
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Deploy to S3 prod bucket
+          command: aws s3 sync client/build s3://bunchofnothing.com --delete --exact-timestamps
 
 workflows:
   version: 2
@@ -31,4 +78,25 @@ workflows:
             only:
               - template
               - /template-*/
+
+    - build-client
+    - deploy-client-dev:
+        context: AWS
+        requires:
+          - build-client
+        filters:
+          branches:
+            only:
+              - develop
+              - /deploy-.*/
+              - /template-*/
+
+    - deploy-client-prod:
+        context: AWS
+        requires:
+          - build-client
+        filters:
+          branches:
+            only:
+              - master
       
