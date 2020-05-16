@@ -47,7 +47,7 @@ export class RDSStack extends Stack {
       masterUsername: "felix",
       masterUserPassword: SecretValue.ssmSecure(
         `db-master-pass-${environment}`,
-        "1"
+        "2"
       ),
       engine: DatabaseInstanceEngine.POSTGRES,
       engineVersion: "11.4",
@@ -71,6 +71,7 @@ export class RDSStack extends Stack {
       ),
       storageEncrypted: environment === Environment.Production,
       multiAz: environment === Environment.Production,
+      databaseName: "nothing",
     });
   }
 }
