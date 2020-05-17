@@ -8,13 +8,11 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "prettier/react",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
   ],
   rules: {
-    // TEMPORARY!
-    // Until first migration is completed
+    "import/extensions": 0,
     "@typescript-eslint/no-explicit-any": 0,
-
     "import/no-unresolved": 0,
     "import/named": 0,
     "import/order": 0,
@@ -28,47 +26,50 @@ module.exports = {
       {
         VariableDeclarator: {
           array: true,
-          object: true
+          object: true,
         },
         AssignmentExpression: {
           array: false,
-          object: false
-        }
+          object: false,
+        },
       },
       {
-        enforceForRenamedProperties: false
-      }
+        enforceForRenamedProperties: false,
+      },
     ],
     "@typescript-eslint/explicit-function-return-type": [
       2,
       {
-        allowExpressions: true
-      }
-    ]
-  },
-  overrides: [{
-    files: [
-      "**/*.test.js",
-      "**/*.test.jsx",
-      "**/*.test.ts",
-      "**/*.test.tsx",
-      "**/__mocks__/**.js",
-      "**/__mocks__/**.ts",
-      "**/__mocks__/**.tsx"
+        allowExpressions: true,
+      },
     ],
-    rules: {
-      "global-require": 0,
-      "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/no-explicit-any": 0,
-      "no-undef": 0,
-      "jest-set/no-undef": "error",
-      "import/no-extraneous-dependencies": 0
+  },
+  overrides: [
+    {
+      files: [
+        "**/*.test.js",
+        "**/*.test.jsx",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/__mocks__/**.js",
+        "**/__mocks__/**.ts",
+        "**/__mocks__/**.tsx",
+      ],
+      rules: {
+        "global-require": 0,
+        "@typescript-eslint/no-var-requires": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "no-undef": 0,
+        "jest-set/no-undef": "error",
+        "import/no-extraneous-dependencies": 0,
+        "import/extensions": 0,
+      },
+      globals: {
+        set: true,
+      },
+      env: {
+        jest: true,
+      },
     },
-    globals: {
-      set: true
-    },
-    env: {
-      jest: true
-    }
-  }]
+  ],
 };
