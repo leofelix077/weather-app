@@ -11,6 +11,7 @@ module.exports = {
     "prettier/@typescript-eslint",
   ],
   rules: {
+    "import/extensions": 0,
     "@typescript-eslint/no-explicit-any": 0,
     "import/no-unresolved": 0,
     "import/named": 0,
