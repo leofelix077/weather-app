@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+
+.autoenv.zsh
+
 # testing
 /coverage
 

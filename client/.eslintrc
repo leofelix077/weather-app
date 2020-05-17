@@ -1,6 +1,0 @@
-{
-  "extends": "@druideirabr",
-  "rules": {
-    "import/extensions": 0
-  }
-}
