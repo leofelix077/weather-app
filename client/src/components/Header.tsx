@@ -44,7 +44,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
       <List>
         {["Random Graphs", "Fancy Gallery", "Some Animations"].map((text) => (
           <ListItem button key={text}>
-            <ListItemText primary={text} style={{ color: "8D8D8D" }} />
+            <ListItemText primary={text} style={{ color: "#8D8D8D" }} />
           </ListItem>
         ))}
       </List>
