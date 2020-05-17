@@ -20,20 +20,30 @@ import rootSaga from "./redux/sagas";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: "#6d6d6d",
-      main: "#424242",
-      dark: "#1b1b1b",
+      light: "#5dee48",
+      main: "#00fa02",
+      dark: "#008800",
       contrastText: "#fff",
     },
     secondary: {
-      light: "#67daff",
-      main: "#03a9f4",
-      dark: "#007ac1",
-      contrastText: "#000",
+      light: "#ff6434",
+      main: "#660000",
+      dark: "#00ff02",
+      contrastText: "#ffffff",
     },
   },
   typography: {
-    fontFamily: "Open Sans",
+    fontFamily: "'Roboto', sans-serif;",
+    allVariants: {
+      color: "#8D8D8D",
+    },
+  },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: "#1a1a1a",
+      },
+    },
   },
 });
 
