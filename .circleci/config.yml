@@ -69,15 +69,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - checkout
-      - run: |
-          LATEST_COMMIT=$(git rev-parse HEAD)
-          FOLDER_COMMIT=$(git log -1 --format=format:%H --full-diff client)
-          if [ "$FOLDER_COMMIT" != "$LATEST_COMMIT" ]; then
-              echo "no folders of relevance have changed"
-              circleci step halt
-              exit 0;
-          fi
       - run:
           name: Deploy to S3 dev bucket
           command: aws s3 sync client/build s3://dev.bunchofnothing.com --delete --exact-timestamps
@@ -89,14 +80,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: |
-          LATEST_COMMIT=$(git rev-parse HEAD)
-          FOLDER_COMMIT=$(git log -1 --format=format:%H --full-diff client)
-          if [ "$FOLDER_COMMIT" != "$LATEST_COMMIT" ]; then
-              echo "no folders of relevance have changed"
-              circleci step halt
-              exit 0;
-          fi
       - run:
           name: Deploy to S3 prod bucket
           command: aws s3 sync client/build s3://bunchofnothing.com --delete --exact-timestamps
@@ -120,7 +103,6 @@ workflows:
               only:
                 - develop
                 - /deploy-.*/
-                - /template-*/
 
       - deploy-client-prod:
           context: AWS
