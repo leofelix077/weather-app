@@ -79,7 +79,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="sticky" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Grid container>
             <Grid item xs={2} sm={4}>

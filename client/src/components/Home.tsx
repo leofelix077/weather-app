@@ -67,7 +67,8 @@ const Home: React.FC = (): ReturnType<React.FC> => {
   return (
     <div
       style={{
-        margin: 32,
+        margin: 16,
+        padding: 16,
       }}
     >
       {HEADER_WORDS.map((word) => (
