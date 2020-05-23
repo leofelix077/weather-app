@@ -13,7 +13,8 @@
 
 # production
 /build
-
+origin.pem
+private.pem
 # misc
 .DS_Store
 .env.local

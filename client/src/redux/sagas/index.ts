@@ -1,7 +1,8 @@
-import { all } from "redux-saga/effects";
+import { all, fork } from "redux-saga/effects";
+import homeAnimation from "./homeAnimation";
 
 function* rootSaga(): any {
-  yield all([]);
+  yield all([fork(homeAnimation)]);
 }
 
 export default rootSaga;
