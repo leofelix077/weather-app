@@ -6,6 +6,13 @@ import { RootState } from "../redux/reducers";
 import { requestAnimation } from "../redux/actions/homeAnimation";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    margin: 16,
+    padding: 16,
+    flexDirection: "column",
+    display: "flex",
+    alignItems: "center",
+  },
   headerAnimation: {
     animation: `$nothingAnimation 3000ms ${theme.transitions.easing.easeInOut}`,
     fontSize: 64,
@@ -42,17 +49,28 @@ const useStyles = makeStyles((theme) => ({
       opacity: 0.1,
       transform: "scale(1)",
     },
-    "95%": {
+    "90%": {
       transform: "scale(1.95)",
+    },
+    "95%": {
+      transform: "scale(2)",
     },
     "100%": {
       opacity: 1,
       transform: "translateX(0)",
     },
   },
+  textContainer: {
+    padding: 16,
+    borderRadius: 6,
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    boxShadow: "rgba(0,0,0, 0.3) 0px 5px 2px",
+  },
 }));
 
-const SUB_HEADER_WORDS = ["Or", "Maybe", "There", "IS"];
+const SUB_HEADER_WORDS = ["GO", "AWAY!"];
 const HEADER_WORDS = ["Nothing", "To See", "Here"];
 
 const Home: React.FC = (): ReturnType<React.FC> => {
@@ -65,30 +83,28 @@ const Home: React.FC = (): ReturnType<React.FC> => {
   }, []);
 
   return (
-    <div
-      style={{
-        margin: 16,
-        padding: 16,
-      }}
-    >
-      {HEADER_WORDS.map((word) => (
-        <Typography className={classes.headerAnimation} key={word}>
-          {word}
-        </Typography>
-      ))}
-      <div style={{ flexDirection: "row", display: "flex" }}>
-        {SUB_HEADER_WORDS.map((word, index) => {
-          return (
-            <Typography
-              key={word}
-              className={clsx(classes.subHeader, {
-                [classes.subHeaderAnimation]: animationState[index.toString()],
-              })}
-            >
-              {word}
-            </Typography>
-          );
-        })}
+    <div className={classes.container}>
+      <div className={classes.textContainer}>
+        {HEADER_WORDS.map((word) => (
+          <Typography className={classes.headerAnimation} key={word}>
+            {word}
+          </Typography>
+        ))}
+        <div style={{ flexDirection: "row", display: "flex" }}>
+          {SUB_HEADER_WORDS.map((word, index) => {
+            return (
+              <Typography
+                key={word}
+                className={clsx(classes.subHeader, {
+                  [classes.subHeaderAnimation]:
+                    animationState[index.toString()],
+                })}
+              >
+                {word}
+              </Typography>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

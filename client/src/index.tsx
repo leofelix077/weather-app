@@ -16,6 +16,8 @@ import createSagaMiddleware from "redux-saga";
 import moment from "moment";
 import store from "./store";
 import rootSaga from "./redux/sagas";
+import { ConnectedRouter, routerMiddleware } from "connected-react-router";
+import { createBrowserHistory } from "history";
 
 const theme = createMuiTheme({
   palette: {
@@ -47,11 +49,13 @@ const theme = createMuiTheme({
   },
 });
 
+const history = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
+const middleware = routerMiddleware(history);
 
-const reduxMiddleware = [sagaMiddleware];
+const reduxMiddleware = [middleware, sagaMiddleware];
 
-store.set(reducer, initialState, applyMiddleware(...reduxMiddleware));
+store.set(reducer(history), initialState, applyMiddleware(...reduxMiddleware));
 
 sagaMiddleware.run(rootSaga);
 
@@ -59,9 +63,11 @@ ReactDOM.render(
   <I18nextProvider i18n={i18next}>
     <MuiThemeProvider theme={theme}>
       <ReduxStoreProvider store={store.get()}>
-        <MuiPickersUtilsProvider utils={MomentUtils} moment={moment}>
-          <App />
-        </MuiPickersUtilsProvider>
+        <ConnectedRouter history={history}>
+          <MuiPickersUtilsProvider utils={MomentUtils} moment={moment}>
+            <App />
+          </MuiPickersUtilsProvider>
+        </ConnectedRouter>
       </ReduxStoreProvider>
     </MuiThemeProvider>
   </I18nextProvider>,

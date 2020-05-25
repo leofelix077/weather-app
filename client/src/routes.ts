@@ -1,3 +1,6 @@
+import Home from "./components/Home";
+import WorkInProgress from "./components/WorkInProgress";
+
 interface RouteConfig {
   public: boolean;
   exact?: boolean;
@@ -6,6 +9,7 @@ interface RouteConfig {
   search?: string;
   label?: string;
   component: any;
+  topLevel?: boolean;
   children?: { [key: string]: RouteConfig };
 }
 
@@ -13,50 +17,63 @@ interface Routes {
   [key: string]: RouteConfig;
 }
 const ROUTES: Routes = {
+  home: {
+    component: Home,
+    path: "/home",
+    public: true,
+    label: "Home",
+    exact: true,
+  },
   graphs: {
-    component: null,
+    component: WorkInProgress,
     path: "/graphs",
     public: true,
+    exact: true,
     label: "Random Graphs",
   },
   fancyGallery: {
-    component: null,
+    component: WorkInProgress,
     path: "/gallery",
     public: true,
+    exact: true,
     label: "Fancy Gallery",
   },
   animation: {
-    component: null,
-    path: "/graphs",
+    component: WorkInProgress,
+    path: "/d3",
     public: true,
     label: "WeirD3",
+    exact: true,
   },
   authenticated: {
-    component: null,
+    component: WorkInProgress,
     path: "/authenticated-route",
     public: false,
     label: "Logged-In Page",
+    exact: true,
   },
   info: {
-    component: null,
+    component: WorkInProgress,
     path: "/info",
-    public: false,
+    public: true,
+    topLevel: true,
     label: "Information",
+    exact: true,
     children: {
       about: {
-        component: null,
+        component: WorkInProgress,
         path: "/about",
         public: false,
         label: "About",
       },
       contact: {
-        component: null,
+        component: WorkInProgress,
         path: "/contact",
         public: false,
         label: "Contact",
       },
       privacyPolicy: {
-        component: null,
+        component: WorkInProgress,
         path: "/contact",
         public: false,
         label: "Privacy Policy",

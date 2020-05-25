@@ -9,8 +9,6 @@ interface AnimationState {
 export const initialState: AnimationState = {
   "0": false,
   "1": false,
-  "2": false,
-  "3": false,
 };
 
 export function homeAnimation(
