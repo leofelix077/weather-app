@@ -74,7 +74,7 @@ jobs:
           at: ~/repo
       - run:
           name: Deploy to S3 prod bucket
-          command: aws s3 sync client/build s3://bunchofnothing.com --delete --exact-timestamps
+          command: aws s3 sync client/build s3://www.bunchofnothing.com --delete --exact-timestamps
 
 workflows:
   version: 2
