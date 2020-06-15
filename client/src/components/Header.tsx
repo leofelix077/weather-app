@@ -11,7 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Route, Switch, Redirect, matchPath, withRouter } from "react-router";
-import ROUTES from "../routes";
+import ROUTES, { Routes, RouteConfig } from "../routes";
 import { NavLink } from "react-router-dom";
 import { ListItemIcon } from "@material-ui/core";
 
@@ -103,7 +103,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
     return <Redirect to="/home" />;
   }
 
-  const drawRoutes = (): any => (
+  const drawRoutes = (routes: Routes, padding: number): any => (
     <div
       className={classes.list}
       role="presentation"
@@ -111,43 +111,52 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
       onKeyDown={() => setDrawerOpen(false)}
     >
       <List>
-        {Object.values(ROUTES).map((routeParams) => {
-          const isTopRouteActive = window.location.pathname.includes(
+        {Object.values(routes).map((routeParams: RouteConfig) => {
+          const isRouteActive = window.location.pathname.includes(
             routeParams.path
           );
 
           return (
-            <NavLink
-              to={{
-                pathname: routeParams.path,
-                search: routeParams.search,
-              }}
-              onClick={() => setDrawerOpen(false)}
-              className={classes.navItem}
-              activeClassName={classes.activeNavItem}
-            >
-              <ListItem button key={routeParams.path}>
-                {routeParams.icon && (
-                  <ListItemIcon
-                    className={
-                      isTopRouteActive
-                        ? classes.activeIcon
-                        : classes.inactiveIcon
-                    }
-                  >
-                    {routeParams.icon}
-                  </ListItemIcon>
-                )}
-                <ListItemText
-                  primary={routeParams.label}
-                  classes={{
-                    primary: isTopRouteActive
-                      ? classes.activeText
-                      : classes.inactiveText,
-                  }}
-                />
-              </ListItem>
-            </NavLink>
+            <>
+              <NavLink
+                to={{
+                  pathname: routeParams.path,
+                  search: routeParams.search,
+                }}
+                onClick={() => setDrawerOpen(false)}
+                className={classes.navItem}
+                activeClassName={classes.activeNavItem}
+              >
+                <ListItem
+                  button
+                  key={routeParams.path}
+                  style={{ paddingLeft: padding * 16 }}
+                >
+                  {routeParams.icon && (
+                    <ListItemIcon
+                      className={
+                        isRouteActive
+                          ? classes.activeIcon
+                          : classes.inactiveIcon
+                      }
+                    >
+                      {routeParams.icon}
+                    </ListItemIcon>
+                  )}
+                  <ListItemText
+                    primary={routeParams.label}
+                    classes={{
+                      primary: isRouteActive
+                        ? classes.activeText
+                        : classes.inactiveText,
+                    }}
+                  />
+                </ListItem>
+              </NavLink>
+              {routeParams.children && (
+                <div>{drawRoutes(routeParams.children, padding + 1)}</div>
+              )}
+            </>
           );
         })}
       </List>
@@ -171,7 +180,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                     open={drawerOpen}
                     onClose={() => setDrawerOpen(false)}
                   >
-                    {drawRoutes()}
+                    {drawRoutes(ROUTES, 1)}
                   </Drawer>
                 </div>
               </Grid>
