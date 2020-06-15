@@ -70,8 +70,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SUB_HEADER_WORDS = ["GO", "AWAY!"];
-const HEADER_WORDS = ["Nothing", "To See", "Here"];
+const SUB_HEADER_WORDS = ["More", "Later"];
+const HEADER_WORDS = ["Work", "In", "Progress"];
 
 const Home: React.FC = (): ReturnType<React.FC> => {
   const classes = useStyles();
