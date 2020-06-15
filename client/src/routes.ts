@@ -1,7 +1,7 @@
 import Home from "./components/Home";
 import WorkInProgress from "./components/WorkInProgress";
 
-interface RouteConfig {
+export interface RouteConfig {
   public: boolean;
   exact?: boolean;
   icon?: any;
@@ -13,7 +13,7 @@ interface RouteConfig {
   children?: { [key: string]: RouteConfig };
 }
 
-interface Routes {
+export interface Routes {
   [key: string]: RouteConfig;
 }
 const ROUTES: Routes = {
@@ -74,7 +74,7 @@ const ROUTES: Routes = {
       },
       privacyPolicy: {
         component: WorkInProgress,
-        path: "/contact",
+        path: "/privacy",
         public: false,
         label: "Privacy Policy",
       },
