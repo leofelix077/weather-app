@@ -37,7 +37,7 @@ jobs:
           at: ~/repo
       - run:
           name: Deploy to S3 dev bucket
-          command: aws s3 sync client/build s3://wather.bunchofnothing.com --delete --exact-timestamps
+          command: aws s3 sync client/build s3://weather.bunchofnothing.com --delete --exact-timestamps
 
 workflows:
   version: 2
