@@ -1,18 +1,18 @@
 import { combineReducers, Reducer } from "redux";
 import {
-  homeAnimation,
-  initialState as homeAnimationState,
-} from "./homeAnimation";
+  localeDetector,
+  initialState as localeDetectorState,
+} from "./localeDetector";
 import { connectRouter } from "connected-react-router";
 
 export const reducer = (history: any): Reducer =>
   combineReducers({
-    homeAnimation,
+    localeDetector,
     router: connectRouter(history),
   });
 
 export const initialState = {
-  homeAnimation: homeAnimationState,
+  localeDetector: localeDetectorState,
 };
 
 export type RootState = typeof initialState;

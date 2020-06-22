@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import { unregister } from "./serviceWorker";
 import { Provider as ReduxStoreProvider } from "react-redux";
 import { applyMiddleware } from "redux";
-import { reducer, initialState } from "./redux/reducers";
+import { reducer, initialState } from "./redux/rootReducer";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { I18nextProvider } from "react-i18next";
 import i18next from "./lib/i18next";
@@ -15,7 +15,7 @@ import MomentUtils from "@date-io/moment";
 import createSagaMiddleware from "redux-saga";
 import moment from "moment";
 import store from "./store";
-import rootSaga from "./redux/sagas";
+import rootSaga from "./redux/rootSaga";
 import { ConnectedRouter, routerMiddleware } from "connected-react-router";
 import { createBrowserHistory } from "history";
 
