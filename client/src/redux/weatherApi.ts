@@ -80,6 +80,6 @@ function* localeChangeSaga(action: { locale: SupportedLocale }): any {
   }
 }
 
-export function* localeDetectorSaga(): SagaIterator {
+export function* weatherApi(): SagaIterator {
   yield takeLatest(GET_WEATHER.REQUEST as any, localeChangeSaga);
 }
