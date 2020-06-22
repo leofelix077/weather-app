@@ -24,61 +24,12 @@ const ROUTES: Routes = {
     label: "Home",
     exact: true,
   },
-  graphs: {
+  weather: {
     component: WorkInProgress,
-    path: "/graphs",
+    path: "/weather",
     public: true,
     exact: true,
-    label: "Random Graphs",
-  },
-  fancyGallery: {
-    component: WorkInProgress,
-    path: "/gallery",
-    public: true,
-    exact: true,
-    label: "Fancy Gallery",
-  },
-  animation: {
-    component: WorkInProgress,
-    path: "/d3",
-    public: true,
-    label: "WeirD3",
-    exact: true,
-  },
-  authenticated: {
-    component: WorkInProgress,
-    path: "/authenticated-route",
-    public: false,
-    label: "Logged-In Page",
-    exact: true,
-  },
-  info: {
-    component: WorkInProgress,
-    path: "/info",
-    public: true,
-    topLevel: true,
-    label: "Information",
-    exact: true,
-    children: {
-      about: {
-        component: WorkInProgress,
-        path: "/about",
-        public: false,
-        label: "About",
-      },
-      contact: {
-        component: WorkInProgress,
-        path: "/contact",
-        public: false,
-        label: "Contact",
-      },
-      privacyPolicy: {
-        component: WorkInProgress,
-        path: "/privacy",
-        public: false,
-        label: "Privacy Policy",
-      },
-    },
+    label: "Weather",
   },
 };
 
