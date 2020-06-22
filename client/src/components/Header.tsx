@@ -194,28 +194,6 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                   alt="Logo"
                 />
               </Grid>
-              <Grid
-                item
-                container
-                sm={4}
-                xs={7}
-                className={classes.loginContainer}
-              >
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Login
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Sign Up
-                </Button>
-              </Grid>
             </Grid>
           </Toolbar>
         </AppBar>
