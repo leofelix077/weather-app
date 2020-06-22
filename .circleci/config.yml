@@ -1,31 +1,5 @@
 version: 2
 jobs:
-  build-eslint-config:
-    docker:
-      - image: circleci/node:12.16.3
-    steps:
-      - checkout
-      - run: |
-          LATEST_COMMIT=$(git rev-parse HEAD)
-          FOLDER_COMMIT=$(git log -1 --format=format:%H --full-diff eslint-config)
-          if [ "$FOLDER_COMMIT" != "$LATEST_COMMIT" ]; then
-              echo "no folders of relevance have changed"
-              circleci step halt
-              exit 0;
-          fi
-      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-      - restore_cache:
-          keys:
-            - v2-eslint-config-{{ checksum "eslint-config/yarn.lock" }}
-            - v2-eslint-config-
-      - run: cd eslint-config && yarn
-      - save_cache:
-          paths:
-            - eslint-config/node_modules
-            - ~/.cache/yarn
-          key: v2-eslint-config-{{ checksum "eslint-config/yarn.lock" }}
-      - run: cd eslint-config && npm publish --access public
-
   build-client:
     docker:
       - image: circleci/node:12.16.3
@@ -35,13 +9,13 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
       - restore_cache:
           keys:
-            - v2-deps-bunch-of-nothing-web-{{ checksum "client/package.json" }}
-            - v2-deps-bunch-of-nothing-web-
+            - v2-deps-weather-app-web-{{ checksum "client/package.json" }}
+            - v2-deps-weather-app-web-
       - run: cd client && yarn install
       - save_cache:
           paths:
             - client/node_modules
-          key: v2-deps-bunch-of-nothing-web-{{ checksum "client/package.json" }}
+          key: v2-deps-weather-app-web-{{ checksum "client/package.json" }}
       - run: |
           cd client && yarn lint && yarn build:ci
       - persist_to_workspace:
@@ -52,7 +26,7 @@ jobs:
           path: client/build
           destination: client-build.zip
 
-  deploy-client-dev:
+  deploy-client:
     docker:
       - image: albelli/aws-codebuild-docker-images:latest
     requires:
@@ -63,40 +37,14 @@ jobs:
           at: ~/repo
       - run:
           name: Deploy to S3 dev bucket
-          command: aws s3 sync client/build s3://dev.bunchofnothing.com --delete --exact-timestamps
-
-  deploy-client-prod:
-    docker:
-      - image: albelli/aws-codebuild-docker-images:latest
-    working_directory: ~/repo
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Deploy to S3 prod bucket
-          command: aws s3 sync client/build s3://www.bunchofnothing.com --delete --exact-timestamps
+          command: aws s3 sync client/build s3://wather.bunchofnothing.com --delete --exact-timestamps
 
 workflows:
   version: 2
   basic-deploy:
     jobs:
-      - build-eslint-config:
-          filters:
-            branches:
-              only: template
-
       - build-client
-      - deploy-client-dev:
-          context: AWS
-          requires:
-            - build-client
-          filters:
-            branches:
-              only:
-                - develop
-                - /deploy-.*/
-
-      - deploy-client-prod:
+      - deploy-client:
           context: AWS
           requires:
             - build-client

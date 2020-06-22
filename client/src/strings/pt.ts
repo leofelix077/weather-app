@@ -1,3 +1,3 @@
 export default {
-  title: "Um Monte de Nada",
+  title: "Previsão do Tempo App",
 };
