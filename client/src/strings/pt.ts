@@ -1,3 +1,8 @@
 export default {
-  title: "Previsão do Tempo App",
+  home: {
+    title: "Previsão App",
+  },
+  header: {
+    locale: "Linguagem",
+  },
 };

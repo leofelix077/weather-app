@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Typography, makeStyles } from "@material-ui/core";
-import clsx from "clsx";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/reducers";
-import { requestAnimation } from "../redux/actions/homeAnimation";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -70,41 +67,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SUB_HEADER_WORDS = ["More", "Later"];
-const HEADER_WORDS = ["Work", "In", "Progress"];
-
 const Home: React.FC = (): ReturnType<React.FC> => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const animationState = useSelector((state: RootState) => state.homeAnimation);
 
-  useEffect(() => {
-    dispatch(requestAnimation());
-  }, []);
+  const { t } = useTranslation("home");
 
   return (
     <div className={classes.container}>
       <div className={classes.textContainer}>
-        {HEADER_WORDS.map((word) => (
-          <Typography className={classes.headerAnimation} key={word}>
-            {word}
-          </Typography>
-        ))}
-        <div style={{ flexDirection: "row", display: "flex" }}>
-          {SUB_HEADER_WORDS.map((word, index) => {
-            return (
-              <Typography
-                key={word}
-                className={clsx(classes.subHeader, {
-                  [classes.subHeaderAnimation]:
-                    animationState[index.toString()],
-                })}
-              >
-                {word}
-              </Typography>
-            );
-          })}
-        </div>
+        <Typography className={classes.headerAnimation}>
+          {t("title")}
+        </Typography>
       </div>
     </div>
   );

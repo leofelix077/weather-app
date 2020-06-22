@@ -1,8 +1,8 @@
 import { all, fork } from "redux-saga/effects";
-import homeAnimation from "./homeAnimation";
+import { localeDetectorSaga } from "./localeDetector";
 
 function* rootSaga(): any {
-  yield all([fork(homeAnimation)]);
+  yield all([fork(localeDetectorSaga)]);
 }
 
 export default rootSaga;

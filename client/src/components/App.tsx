@@ -1,6 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core";
 import Header from "./Header";
+import { useDispatch } from "react-redux";
+import { requestLocaleChange } from "../redux/localeDetector";
+import { SupportedLocale } from "../constants";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -30,6 +33,12 @@ const useStyles = makeStyles(() => ({
 }));
 
 const App: React.FC = (): ReturnType<React.FC> => {
+  const preferredLocale = localStorage.getItem("locale");
+  const dispatch = useDispatch();
+  if (preferredLocale) {
+    dispatch(requestLocaleChange(preferredLocale as SupportedLocale));
+  }
+
   const classes = useStyles();
   return (
     <div className={classes.root}>

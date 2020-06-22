@@ -14,6 +14,7 @@ import { Route, Switch, Redirect, matchPath, withRouter } from "react-router";
 import ROUTES, { Routes, RouteConfig } from "../routes";
 import { NavLink } from "react-router-dom";
 import { ListItemIcon } from "@material-ui/core";
+import LocaleSelector from "./LanguageSelector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -156,11 +157,11 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
               {routeParams.children && (
                 <div>{drawRoutes(routeParams.children, padding + 1)}</div>
               )}
+              <Divider />
             </>
           );
         })}
       </List>
-      <Divider />
     </div>
   );
 
@@ -181,6 +182,8 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                     onClose={() => setDrawerOpen(false)}
                   >
                     {drawRoutes(ROUTES, 1)}
+
+                    <LocaleSelector />
                   </Drawer>
                 </div>
               </Grid>
@@ -190,28 +193,6 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                   src="https://static.bunchofnothing.com/logo.png"
                   alt="Logo"
                 />
-              </Grid>
-              <Grid
-                item
-                container
-                sm={4}
-                xs={7}
-                className={classes.loginContainer}
-              >
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Login
-                </Button>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  className={classes.button}
-                >
-                  Sign Up
-                </Button>
               </Grid>
             </Grid>
           </Toolbar>

@@ -1,3 +1,8 @@
 export default {
-  title: "Weather App",
+  home: {
+    title: "Weather App",
+  },
+  header: {
+    locale: "Language",
+  },
 };
