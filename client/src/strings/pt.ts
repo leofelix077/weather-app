@@ -2,7 +2,12 @@ export default {
   home: {
     title: "Previsão App",
   },
-  header: {
-    locale: "Linguagem",
+  languages: {
+    header: "Linguagem",
+    pt: "Português",
+    en: "Inglês",
+  },
+  temperature: {
+    header: "Temperatura",
   },
 };

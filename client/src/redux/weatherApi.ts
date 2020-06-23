@@ -69,7 +69,7 @@ async function storeValue(key: string, value: string): Promise<void> {
   }
 }
 
-function* localeChangeSaga(action: { locale: SupportedLocale }): any {
+function* weatherApiSaga(action: { locale: SupportedLocale }): any {
   const { locale } = action;
   yield call([i18next, i18next.changeLanguage], locale);
   yield put(setCurrentWeather(locale));
@@ -81,5 +81,5 @@ function* localeChangeSaga(action: { locale: SupportedLocale }): any {
 }
 
 export function* weatherApi(): SagaIterator {
-  yield takeLatest(GET_WEATHER.REQUEST as any, localeChangeSaga);
+  yield takeLatest(GET_WEATHER.REQUEST as any, weatherApiSaga);
 }

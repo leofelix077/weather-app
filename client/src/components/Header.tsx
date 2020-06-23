@@ -14,7 +14,8 @@ import { Route, Switch, Redirect, matchPath, withRouter } from "react-router";
 import ROUTES, { Routes, RouteConfig } from "../routes";
 import { NavLink } from "react-router-dom";
 import { ListItemIcon } from "@material-ui/core";
-import LocaleSelector from "./LanguageSelector";
+import LocaleSelector from "./LocaleSelector";
+import TemperatureSelector from "./TemperatureSelector";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -184,6 +185,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                     {drawRoutes(ROUTES, 1)}
 
                     <LocaleSelector />
+                    <TemperatureSelector />
                   </Drawer>
                 </div>
               </Grid>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SupportedLocale } from "../constants";
 import { Select, MenuItem, makeStyles, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,25 +31,23 @@ const LocaleSelector: React.FC = (): ReturnType<React.FC> => {
     (state: RootState) => state.localeDetector.currentLocale
   );
 
-  const [currentLocale, setCurrentLocale] = useState<SupportedLocale>(locale);
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { t } = useTranslation("header");
+  const { t } = useTranslation("languages");
 
   const handleSelectLanguage = async (
     event: React.ChangeEvent<{ value: unknown }>
   ): Promise<void> => {
-    setCurrentLocale(event.target.value as SupportedLocale);
     dispatch(requestLocaleChange(event.target.value as SupportedLocale));
   };
 
   return (
     <div className={classes.list}>
-      <Typography className={classes.languageText}>{t("locale")}</Typography>
+      <Typography className={classes.languageText}>{t("header")}</Typography>
       <Select
         labelId="language-selector"
         id="language-selector"
-        value={currentLocale}
+        value={locale}
         onChange={handleSelectLanguage}
         style={{ width: "100%" }}
         classes={{
@@ -57,8 +55,8 @@ const LocaleSelector: React.FC = (): ReturnType<React.FC> => {
           selectMenu: classes.selectMenu,
         }}
       >
-        {Object.entries(SupportedLocale).map(([key, value]) => (
-          <MenuItem value={value as string}>{key}</MenuItem>
+        {Object.values(SupportedLocale).map((value) => (
+          <MenuItem value={value as string}>{t(value)}</MenuItem>
         ))}
       </Select>
     </div>

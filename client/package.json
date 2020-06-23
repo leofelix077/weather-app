@@ -48,7 +48,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build:ci": "CI=false SKIP_PREFLIGHT_CHECK=true react-scripts --max_old_space_size=4096 build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "copy-s3-dev": "aws s3 sync build/ s3://dev.bunchofnothing.com --delete --exact-timestamps",
     "deploy-dev": "yarn build && yarn copy-s3-dev",
@@ -72,12 +72,14 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.10.1",
     "@druideirabr/eslint-config": "^0.0.8",
     "@types/history": "^4.7.6",
     "@types/node": "^14.0.1",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.8",
+    "jest": "^26.0.1",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
