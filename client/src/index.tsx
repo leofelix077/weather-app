@@ -1,5 +1,5 @@
-import "moment/locale/de";
-
+import "moment/locale/pt-br";
+import "moment/locale/en-gb";
 import App from "./components/App";
 import React from "react";
 import ReactDOM from "react-dom";

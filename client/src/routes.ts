@@ -1,5 +1,5 @@
 import Home from "./components/Home";
-import WorkInProgress from "./components/WorkInProgress";
+import WeatherContainer from "./components/WeatherContainer";
 
 export interface RouteConfig {
   public: boolean;
@@ -10,6 +10,7 @@ export interface RouteConfig {
   label?: string;
   component: any;
   topLevel?: boolean;
+  translate: string;
   children?: { [key: string]: RouteConfig };
 }
 
@@ -23,13 +24,14 @@ const ROUTES: Routes = {
     public: true,
     label: "Home",
     exact: true,
+    translate: "home",
   },
   weather: {
-    component: WorkInProgress,
+    component: WeatherContainer,
     path: "/weather",
     public: true,
-    exact: true,
     label: "Weather",
+    translate: "weather",
   },
 };
 

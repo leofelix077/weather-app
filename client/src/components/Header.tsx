@@ -13,8 +13,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Route, Switch, Redirect, matchPath, withRouter } from "react-router";
 import ROUTES, { Routes, RouteConfig } from "../routes";
 import { NavLink } from "react-router-dom";
-import { ListItemIcon } from "@material-ui/core";
-import LocaleSelector from "./LanguageSelector";
+import { ListItemIcon, Typography, Hidden } from "@material-ui/core";
+import LocaleSelector from "./LocaleSelector";
+import TemperatureSelector from "./TemperatureSelector";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,24 +41,15 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "transparent",
     display: "flex",
   },
+  appTitle: {
+    alignItems: "center",
+    display: "flex",
+  },
   listItem: {
     color: "#8D8D8D",
   },
   toolbar: {
     justifyContent: "space-between",
-  },
-  logoContainer: {
-    display: "flex",
-    justifyContent: "center",
-  },
-  logo: {
-    objectFit: "contain",
-    width: "100%",
-    height: 36,
-  },
-  loginContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
   },
   navItem: {
     color: "#333",
@@ -88,11 +81,25 @@ const useStyles = makeStyles((theme) => ({
   inactiveIcon: {
     color: "#8D8D8D",
   },
+  contentContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  selectorsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
+  navContainer: {
+    display: "flex",
+  },
 }));
 
 const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const { t } = useTranslation("routes");
 
   if (
     matchPath(window.location.pathname, {
@@ -101,7 +108,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
       strict: true,
     })
   ) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/weather" />;
   }
 
   const drawRoutes = (routes: Routes, padding: number): any => (
@@ -145,7 +152,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                     </ListItemIcon>
                   )}
                   <ListItemText
-                    primary={routeParams.label}
+                    primary={`${t(routeParams.translate)}`}
                     classes={{
                       primary: isRouteActive
                         ? classes.activeText
@@ -170,8 +177,8 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
       <div className={classes.root}>
         <AppBar position="fixed" className={classes.appBar}>
           <Toolbar className={classes.toolbar}>
-            <Grid container>
-              <Grid item xs={2} sm={4}>
+            <Grid container className={classes.contentContainer}>
+              <Grid item sm={6} xs={2} className={classes.navContainer}>
                 <Button onClick={() => setDrawerOpen(true)}>
                   <MenuIcon className={classes.menuIcon} />
                 </Button>
@@ -182,17 +189,18 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                     onClose={() => setDrawerOpen(false)}
                   >
                     {drawRoutes(ROUTES, 1)}
-
-                    <LocaleSelector />
                   </Drawer>
                 </div>
+                <Hidden xsDown>
+                  <div className={classes.appTitle}>
+                    <Typography>WeatherApp</Typography>
+                  </div>
+                </Hidden>
               </Grid>
-              <Grid item sm={4} xs={3} className={classes.logoContainer}>
-                <img
-                  className={classes.logo}
-                  src="https://static.bunchofnothing.com/logo.png"
-                  alt="Logo"
-                />
+
+              <Grid item sm={6} xs={10} className={classes.selectorsContainer}>
+                <LocaleSelector />
+                <TemperatureSelector />
               </Grid>
             </Grid>
           </Toolbar>

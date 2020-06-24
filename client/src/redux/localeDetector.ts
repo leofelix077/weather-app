@@ -3,8 +3,9 @@
 import { takeLatest, put, call } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import produce from "immer";
-import { SupportedLocale } from "../constants";
+import { SupportedLocale, LOCALE_KEY } from "../constants";
 import i18next from "i18next";
+import { storeValue } from "../lib/storeLocal";
 
 // types
 
@@ -60,24 +61,11 @@ export function localeDetector(
 }
 
 // saga
-
-async function storeValue(key: string, value: string): Promise<void> {
-  try {
-    await localStorage.setItem(key, value.toString());
-  } catch (error) {
-    console.log("localStorage error during store:", error);
-  }
-}
-
 function* localeChangeSaga(action: { locale: SupportedLocale }): any {
   const { locale } = action;
   yield call([i18next, i18next.changeLanguage], locale);
   yield put(setLocaleChange(locale));
-  try {
-    yield call(storeValue, "locale", locale);
-  } catch (error) {
-    console.log(error);
-  }
+  yield call(storeValue, LOCALE_KEY, locale);
 }
 
 export function* localeDetectorSaga(): SagaIterator {

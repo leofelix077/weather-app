@@ -1,7 +1,7 @@
 import i18next from "i18next";
 
-import pt from "../strings/pt";
-import en from "../strings/en";
+import pt from "../strings/pt-br";
+import en from "../strings/en-gb";
 import { SupportedLocale } from "../constants";
 
 const preferredLocale = localStorage.getItem("locale");
