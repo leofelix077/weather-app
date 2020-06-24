@@ -4,8 +4,8 @@ export default {
   },
   languages: {
     header: "Language",
-    pt: "Portuguese",
-    en: "English",
+    "pt-br": "Portuguese",
+    "en-gb": "English",
   },
   temperature: {
     header: "Temperature",

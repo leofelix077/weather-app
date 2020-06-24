@@ -111,7 +111,7 @@ export const getCurrentWeatherError = (
 
 // reducer
 interface WeatherForecast {
-  weatherForecast: any;
+  weatherForecast: WeatherData | null;
   request: {
     processing: boolean;
     success: boolean;
@@ -120,7 +120,7 @@ interface WeatherForecast {
 }
 
 export const initialState: WeatherForecast = {
-  weatherForecast: [],
+  weatherForecast: null,
   request: {
     processing: false,
     success: false,
@@ -145,7 +145,9 @@ export function weatherReducer(
       });
     case GET_WEATHER.ERROR:
       return produce(state, (newState) => {
-        newState.weatherForecast = action.weatherForecast;
+        newState.request.error = action.error;
+        newState.request.success = false;
+        newState.request.processing = action.false;
       });
     default:
       return state;
@@ -161,6 +163,7 @@ function* weatherApiSaga(action: WeatherLocation): any {
     const response: WeatherData = yield call(transport, {
       url: createWeatherApiCall(city, isoCountryCode),
     });
+    console.log(response);
     yield put(getCurrentWeatherSuccess(response));
   } catch (error) {
     console.log(error);
@@ -170,11 +173,4 @@ function* weatherApiSaga(action: WeatherLocation): any {
 
 export function* weatherApi(): SagaIterator {
   yield takeLatest(GET_WEATHER.REQUEST as any, weatherApiSaga);
-
-  // const offlineVenuesTask = yield fork(offlineVenuesSaga);
-  // const offlineVenuesChannel = yield actionChannel(
-  //   types.offlineVenues.GET_OFFLINE_VENUE_STATE.REQUEST
-  // );
-  // yield delay(1000);
-  // const actions = yield flush(offlineVenuesChannel);
 }

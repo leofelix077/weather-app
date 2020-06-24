@@ -1,6 +1,6 @@
 export enum SupportedLocale {
-  English = "en",
-  Portuguese = "pt",
+  English = "en-gb",
+  Portuguese = "pt-br",
 }
 
 export enum SupportedTemperature {
