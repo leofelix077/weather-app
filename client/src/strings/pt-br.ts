@@ -17,4 +17,14 @@ export default {
   general: {
     loading: "Carregando...",
   },
+  weather: {
+    feelsLike: "Sensação",
+    humidity: "Umidade",
+    pressure: "Pressão",
+    graphLabel: "Previsão",
+  },
+  routes: {
+    home: "Principal",
+    weather: "Previsão",
+  },
 };

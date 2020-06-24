@@ -16,6 +16,7 @@ import { NavLink } from "react-router-dom";
 import { ListItemIcon, Typography, Hidden } from "@material-ui/core";
 import LocaleSelector from "./LocaleSelector";
 import TemperatureSelector from "./TemperatureSelector";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,6 +99,7 @@ const useStyles = makeStyles((theme) => ({
 const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const { t } = useTranslation("routes");
 
   if (
     matchPath(window.location.pathname, {
@@ -150,7 +152,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                     </ListItemIcon>
                   )}
                   <ListItemText
-                    primary={routeParams.label}
+                    primary={`${t(routeParams.translate)}`}
                     classes={{
                       primary: isRouteActive
                         ? classes.activeText

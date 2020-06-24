@@ -10,24 +10,30 @@ import {
   SupportedTemperature,
 } from "../constants";
 import { requestTemperatureChange } from "../redux/temperatureSelector";
+import moment from "moment";
 
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     height: "100vh",
     width: "100vw",
-    backgroundColor: "#1B1B1B",
-  },
-  rootShadowOverlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    height: "100vh",
-    width: "100vw",
-    backgroundColor: "rgba(0,0,0,0.75)",
-    zIndex: -1,
+    maxWidth: "100vw",
+    maxHeight: "100vh",
+    overflowX: "hidden",
+    backgroundColor: "#111",
   },
 }));
+
+moment.updateLocale(SupportedLocale.English, {
+  longDateFormat: {
+    L: "MM/DD/YY",
+  },
+} as any);
+moment.updateLocale(SupportedLocale.Portuguese, {
+  longDateFormat: {
+    L: "DD/MM/YY",
+  },
+} as any);
 
 const App: React.FC = (): ReturnType<React.FC> => {
   const dispatch = useDispatch();
@@ -47,7 +53,6 @@ const App: React.FC = (): ReturnType<React.FC> => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.rootShadowOverlay} />
       <Header />
     </div>
   );
