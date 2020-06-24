@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
-import { takeLatest, put, call } from "redux-saga/effects";
+import { takeEvery, put, call } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import produce from "immer";
 import { transport } from "../lib/transport";
@@ -105,7 +105,7 @@ interface GetCurrentWeatherError {
 export const getCurrentWeatherError = (
   error: string
 ): GetCurrentWeatherError => ({
-  type: GET_WEATHER.SUCCESS,
+  type: GET_WEATHER.ERROR,
   error,
 });
 
@@ -135,6 +135,7 @@ export function weatherReducer(
   switch (action.type) {
     case GET_WEATHER.REQUEST:
       return produce(state, (newState) => {
+        console.warn(newState);
         newState.request.processing = true;
       });
     case GET_WEATHER.SUCCESS:
@@ -142,6 +143,7 @@ export function weatherReducer(
         newState.weatherForecast = action.weatherForecast;
         newState.request.success = true;
         newState.request.processing = false;
+        newState.request.error = null;
       });
     case GET_WEATHER.ERROR:
       return produce(state, (newState) => {
@@ -167,10 +169,11 @@ function* weatherApiSaga(action: WeatherLocation): any {
     yield put(getCurrentWeatherSuccess(response));
   } catch (error) {
     console.log(error);
+    console.log(error);
     yield put(getCurrentWeatherError(error.message));
   }
 }
 
 export function* weatherApi(): SagaIterator {
-  yield takeLatest(GET_WEATHER.REQUEST as any, weatherApiSaga);
+  yield takeEvery(GET_WEATHER.REQUEST as any, weatherApiSaga);
 }

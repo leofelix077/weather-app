@@ -32,6 +32,10 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
     (state: RootState) => state.temperature.temperature
   );
 
+  if (!data) {
+    return null;
+  }
+
   const labels = data.map((dataPoint) =>
     moment
       .unix(dataPoint.dt)

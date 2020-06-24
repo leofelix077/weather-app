@@ -27,4 +27,9 @@ export default {
     home: "Home",
     weather: "Weather",
   },
+  place: {
+    place: "City",
+    countryCode: "Country Code",
+    send: "Send",
+  },
 };

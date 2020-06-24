@@ -18,6 +18,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import clsx from "clsx";
 import { WeatherGraph } from "./WeatherGraph";
+import { SearchBar } from "./SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -55,38 +56,33 @@ const useStyles = makeStyles((theme) => ({
 
 const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   const dispatch = useDispatch();
-
   const currentTime = useTime({ unit: 1, interval: TimeSync.MINUTES });
-
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-
   const [visibleIndexes, setVisibleIndexes] = useState([0, 1, 2]);
-
   const classes = useStyles();
-
   useEffect(() => {
     dispatch(getCurrentWeatherRequest("Munich", "de"));
   }, []);
-
   const weatherData = useSelector(
     (state: RootState) => state.weather.weatherForecast as WeatherData
   );
-
   const locale = useSelector(
     (state: RootState) => state.localeDetector.currentLocale
   );
   const { error, processing } = useSelector(
     (state: RootState) => state.weather.request
   );
-
   if (error) {
-    return <Error error={error} />;
+    return (
+      <div>
+        <SearchBar />
+        <Error error={error} />
+      </div>
+    );
   }
-
   if (processing || !weatherData) {
     return <Loading />;
   }
-
   if (!selectedDay) {
     setSelectedDay(
       moment
@@ -129,6 +125,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
       <Typography className={classes.currentTime}>
         {moment.unix(currentTime).locale(locale).format("LLLL")}
       </Typography>
+      <SearchBar />
       <div className={classes.container}>
         <Grid container>
           <Grid

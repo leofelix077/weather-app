@@ -27,4 +27,9 @@ export default {
     home: "Principal",
     weather: "Previsão",
   },
+  place: {
+    place: "Cidade",
+    countryCode: "Código do País",
+    send: "Enviar",
+  },
 };
