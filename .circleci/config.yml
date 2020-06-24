@@ -39,6 +39,19 @@ jobs:
           name: Deploy to S3 dev bucket
           command: aws s3 sync client/build s3://weather.bunchofnothing.com --delete --exact-timestamps
 
+  deploy-client-dev:
+    docker:
+      - image: albelli/aws-codebuild-docker-images:latest
+    requires:
+      - build-client
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Deploy to S3 dev bucket
+          command: aws s3 sync client/build s3://weather-dev.bunchofnothing.com --delete --exact-timestamps
+
 workflows:
   version: 2
   basic-deploy:
@@ -52,3 +65,11 @@ workflows:
             branches:
               only:
                 - master
+      - deploy-client-dev:
+          context: AWS
+          requires:
+            - build-client
+          filters:
+            branches:
+              only:
+                - develop
