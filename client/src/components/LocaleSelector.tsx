@@ -8,7 +8,10 @@ import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   list: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   selectRoot: {
     backgroundColor: "#333333",
@@ -18,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
   selectMenu: {
     color: "#8D8D8D",
     backgroundColor: "3E3E3E",
+    padding: theme.spacing(1),
   },
   languageText: {
-    fontSize: 10,
+    fontSize: 8,
     color: "white",
-    paddingBottom: theme.spacing(1),
   },
 }));
 

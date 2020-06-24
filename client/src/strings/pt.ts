@@ -10,4 +10,11 @@ export default {
   temperature: {
     header: "Temperatura",
   },
+  errors: {
+    network: "Oops. Um erro ocorreu. Por favor tente novamente",
+    "temperature-unsupported": "Temperatura não suportada",
+  },
+  general: {
+    loading: "Carregando...",
+  },
 };

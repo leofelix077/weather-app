@@ -1,6 +1,6 @@
 import { all, fork } from "redux-saga/effects";
 import { localeDetectorSaga } from "./localeDetector";
-import { weatherApi } from "./weatherApi";
+import { weatherApi } from "./weather";
 import { temperatureSelectorSaga } from "./temperatureSelector";
 
 function* rootSaga(): any {

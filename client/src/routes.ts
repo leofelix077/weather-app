@@ -1,5 +1,5 @@
 import Home from "./components/Home";
-import WorkInProgress from "./components/WorkInProgress";
+import WeatherContainer from "./components/WeatherContainer";
 
 export interface RouteConfig {
   public: boolean;
@@ -25,10 +25,9 @@ const ROUTES: Routes = {
     exact: true,
   },
   weather: {
-    component: WorkInProgress,
+    component: WeatherContainer,
     path: "/weather",
     public: true,
-    exact: true,
     label: "Weather",
   },
 };
