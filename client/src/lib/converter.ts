@@ -9,9 +9,9 @@ export const convertTemperature = (
 ): number => {
   switch (temperature) {
     case SupportedTemperature.Celsius:
-      return degrees + ABZOLUTE_ZERO;
+      return Math.round(degrees + ABZOLUTE_ZERO);
     case SupportedTemperature.Fahrenheit:
-      return ((degrees + ABZOLUTE_ZERO) * 9) / 5 + 32;
+      return Math.round(((degrees + ABZOLUTE_ZERO) * 9) / 5 + 32);
     default:
       throw new Error(i18next.t("errors:temperature-unsupported"));
   }
