@@ -17,6 +17,18 @@ interface WeatherGraphProps {
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2),
+    width: "80vw",
+    display: "flex",
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "40vh",
+  },
+  root: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }));
 
@@ -40,32 +52,45 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
     moment
       .unix(dataPoint.dt)
       .utcOffset(utcOffset / 60)
-      .format("DD.MM HH:mm")
+      .format("HH:mm")
   );
 
   return (
-    <div className={classes.container}>
-      <Bar
-        data={{
-          labels,
-          datasets: [
-            {
-              label: t("graphLabel"),
-              backgroundColor: "rgba(0,99,0,0.2)",
-              borderColor: "rgba(0,99,0,1)",
-              borderWidth: 1,
-              hoverBackgroundColor: "rgba(0,99,0,0.4)",
-              hoverBorderColor: "rgba(0,99,0,1)",
-              data: data.map((dataPoint) =>
-                convertTemperature(dataPoint.main.temp, preferredTemperature)
-              ),
+    <div className={classes.root}>
+      <div className={classes.container}>
+        <Bar
+          data={{
+            labels,
+            datasets: [
+              {
+                label: t("graphLabel"),
+                backgroundColor: "rgba(0,99,0,0.2)",
+                borderColor: "rgba(0,99,0,1)",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(0,99,0,0.4)",
+                hoverBorderColor: "rgba(0,99,0,1)",
+                data: data.map((dataPoint) =>
+                  convertTemperature(dataPoint.main.temp, preferredTemperature)
+                ),
+              },
+            ],
+          }}
+          width={document.documentElement.clientWidth / 3}
+          height={document.documentElement.clientWidth / 6}
+          options={{
+            maintainAspectRatio: true,
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                },
+              ],
             },
-          ],
-        }}
-        width={document.documentElement.clientWidth / 2}
-        height={document.documentElement.clientWidth / 3}
-        options={{ maintainAspectRatio: true }}
-      />
+          }}
+        />
+      </div>
     </div>
   );
 };

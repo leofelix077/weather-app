@@ -113,7 +113,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   const increaseIndexes = (): void => {
     if (
       visibleIndexes[visibleIndexes.length - 1] ===
-      Object.keys(formattedWeatherData).length
+      Object.keys(formattedWeatherData).length - 1
     ) {
       return;
     }
@@ -173,7 +173,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
             onClick={increaseIndexes}
           >
             {visibleIndexes[visibleIndexes.length - 1] <
-              Object.keys(formattedWeatherData).length && (
+              Object.keys(formattedWeatherData).length - 1 && (
               <ChevronRightIcon className={classes.icon} />
             )}
           </Grid>
