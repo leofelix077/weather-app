@@ -74,7 +74,9 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   );
 
   useEffect(() => {
-    dispatch(getCurrentWeatherRequest(place, countryCode));
+    if (countryCode && place) {
+      dispatch(getCurrentWeatherRequest(place, countryCode));
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -82,7 +84,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
     (state: RootState) => state.weather.weatherForecast as WeatherData
   );
   useEffect(() => {
-    if (weatherData && weatherData.list) {
+    if (weatherData?.list) {
       setSelectedDay(
         moment
           .unix(weatherData.list[0].dt)
@@ -90,6 +92,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
           .startOf("day")
           .unix()
       );
+      setVisibleIndexes([0, 1, 2]);
     }
   }, [weatherData]);
 
@@ -104,6 +107,11 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
       </div>
     );
   }
+
+  if (!countryCode && !place && !weatherData) {
+    return <SearchBar />;
+  }
+
   if (processing || !weatherData) {
     return <Loading />;
   }
@@ -181,9 +189,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
                     <WeatherBlock
                       day={parseInt(key, 10)}
                       data={entries}
-                      isSelected={
-                        selectedDay ? key === selectedDay.toString() : false
-                      }
+                      isSelected={key === selectedDay?.toString()}
                       utcOffset={weatherData.city.timezone}
                     />
                   </Grid>
