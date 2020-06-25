@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
   additionalInfoText: {
     color: "white",
-    fontSize: "1vw",
+    fontSize: "2vw",
   },
   additionalInfoHeader: {
     color: "white",
-    fontSize: "1vw",
+    fontSize: "2vw",
   },
   additionalInfoContainer: {
     display: "flex",
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1vw",
   },
   feelsLike: {
-    fontSize: "1.5vw",
+    fontSize: "2vw",
   },
   containerSelected: {
     boxShadow: "2px 2px rgba(128,128,128,0.2)",
