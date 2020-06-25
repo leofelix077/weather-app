@@ -20,6 +20,7 @@ import clsx from "clsx";
 import { WeatherGraph } from "./WeatherGraph";
 import { SearchBar } from "./SearchBar";
 import RadioTemperatureSelector from "./RadioTemperatureSelector";
+import { Dictionary } from "lodash";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -56,6 +57,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     display: "flex",
     justifyContent: "space-between",
+  },
+  loadingOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: "100%",
+    width: "100%",
+    backgroundColor: "rgba(0,0,0,0.75)",
+  },
+  loadingMargin: {
+    marginTop: 64,
   },
 }));
 
@@ -112,19 +124,22 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
     return <SearchBar />;
   }
 
-  if (processing || !weatherData) {
+  if (processing && !weatherData) {
     return <Loading />;
   }
 
-  const formattedWeatherData = groupBy(
-    weatherData.list,
-    (dataPoint: WeatherDataPoint) =>
-      moment
-        .unix(dataPoint.dt)
-        .utcOffset(weatherData.city.timezone)
-        .startOf("day")
-        .unix()
-  );
+  let formattedWeatherData: Dictionary<WeatherDataPoint[]> = [] as any;
+  if (weatherData?.list) {
+    formattedWeatherData = groupBy(
+      weatherData.list,
+      (dataPoint: WeatherDataPoint) =>
+        moment
+          .unix(dataPoint.dt)
+          .utcOffset(weatherData.city.timezone)
+          .startOf("day")
+          .unix()
+    );
+  }
 
   const decreaseIndexes = (): void => {
     if (!visibleIndexes[0]) {
@@ -145,78 +160,89 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
 
   return (
     <div>
-      <div className={classes.header}>
-        <Typography className={classes.currentTime}>
-          {weatherData.city.name}
-          {" - "}
-          {moment
-            .unix(currentTime)
-            .utcOffset(weatherData.city.timezone / 60)
-            .locale(locale)
-            .format("LLLL")}
-        </Typography>
-        <RadioTemperatureSelector />
-      </div>
-      <SearchBar />
-      <div className={classes.container}>
-        <Grid container>
-          <Grid
-            item
-            xs={1}
-            className={classes.iconContainer}
-            onClick={decreaseIndexes}
-          >
-            {!!visibleIndexes[0] && (
-              <ChevronLeftIcon className={classes.icon} />
-            )}
-          </Grid>
-          <Grid item container xs={10}>
-            {Object.entries(formattedWeatherData).map(
-              ([key, entries], index) => {
-                return (
-                  <Grid
-                    item
-                    xs={4}
-                    key={key}
-                    className={clsx({
-                      [classes.weatherBlockContainer]: true,
-                      [classes.weatherBlockContainerHidden]: !visibleIndexes.includes(
-                        index
-                      ),
-                    })}
-                    onClick={() => setSelectedDay(parseInt(key, 10))}
-                  >
-                    <WeatherBlock
-                      day={parseInt(key, 10)}
-                      data={entries}
-                      isSelected={key === selectedDay?.toString()}
-                      utcOffset={weatherData.city.timezone}
-                    />
-                  </Grid>
-                );
-              }
-            )}
-          </Grid>
+      {weatherData?.list.length && (
+        <>
+          <div className={classes.header}>
+            <Typography className={classes.currentTime}>
+              {weatherData.city.name}
+              {" - "}
+              {moment
+                .unix(currentTime)
+                .utcOffset(weatherData.city.timezone / 60)
+                .locale(locale)
+                .format("LLLL")}
+            </Typography>
+            <RadioTemperatureSelector />
+          </div>
+          <SearchBar />
+          <div className={classes.container}>
+            <Grid container>
+              <Grid
+                item
+                xs={1}
+                className={classes.iconContainer}
+                onClick={decreaseIndexes}
+              >
+                {!!visibleIndexes[0] && (
+                  <ChevronLeftIcon className={classes.icon} />
+                )}
+              </Grid>
+              <Grid item container xs={10}>
+                {Object.entries(formattedWeatherData).map(
+                  ([key, entries], index) => {
+                    return (
+                      <Grid
+                        item
+                        xs={4}
+                        key={key}
+                        className={clsx({
+                          [classes.weatherBlockContainer]: true,
+                          [classes.weatherBlockContainerHidden]: !visibleIndexes.includes(
+                            index
+                          ),
+                        })}
+                        onClick={() => setSelectedDay(parseInt(key, 10))}
+                      >
+                        <WeatherBlock
+                          day={parseInt(key, 10)}
+                          data={entries}
+                          isSelected={key === selectedDay?.toString()}
+                          utcOffset={weatherData.city.timezone}
+                        />
+                      </Grid>
+                    );
+                  }
+                )}
+              </Grid>
 
-          <Grid
-            item
-            xs={1}
-            className={classes.iconContainer}
-            onClick={increaseIndexes}
-          >
-            {visibleIndexes[visibleIndexes.length - 1] <
-              Object.keys(formattedWeatherData).length - 1 && (
-              <ChevronRightIcon className={classes.icon} />
-            )}
+              <Grid
+                item
+                xs={1}
+                className={classes.iconContainer}
+                onClick={increaseIndexes}
+              >
+                {visibleIndexes[visibleIndexes.length - 1] <
+                  Object.keys(formattedWeatherData).length - 1 && (
+                  <ChevronRightIcon className={classes.icon} />
+                )}
+              </Grid>
+            </Grid>
+          </div>
+          <Grid item xs={12}>
+            <WeatherGraph
+              data={formattedWeatherData[selectedDay as number]}
+              utcOffset={weatherData.city.timezone}
+            />
           </Grid>
-        </Grid>
-      </div>
-      <Grid item xs={12}>
-        <WeatherGraph
-          data={formattedWeatherData[selectedDay as number]}
-          utcOffset={weatherData.city.timezone}
-        />
-      </Grid>
+        </>
+      )}
+      {processing && (
+        <div className={classes.loadingOverlay}>
+          <div className={classes.loadingMargin}>
+            <Loading />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
