@@ -140,7 +140,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
       <div className={classes.header}>
         <Typography className={classes.currentTime}>
           {weatherData.city.name}
-          {" -> "}
+          {" - "}
           {moment
             .unix(currentTime)
             .utcOffset(weatherData.city.timezone / 60)
