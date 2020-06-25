@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Hello, Enzyme! renders 1`] = `
+exports[`Should render each weather block with correct temperature renders WeatherBlock correctly 1`] = `
 <Provider
   store={
     Object {
