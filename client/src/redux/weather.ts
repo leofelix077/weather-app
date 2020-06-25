@@ -171,7 +171,6 @@ function* weatherApiSaga(action: WeatherLocation): any {
     yield delay(500); // simulate longer request
     yield put(getCurrentWeatherSuccess(response));
   } catch (error) {
-    console.log(error);
     yield put(getCurrentWeatherError(error.message));
   }
 }
