@@ -61,7 +61,9 @@ const LocaleSelector: React.FC = (): ReturnType<React.FC> => {
         }}
       >
         {Object.entries(SupportedTemperature).map(([key, value]) => (
-          <MenuItem value={value as string}>{key}</MenuItem>
+          <MenuItem key={key} value={value as string}>
+            {key}
+          </MenuItem>
         ))}
       </Select>
     </div>

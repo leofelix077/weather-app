@@ -125,7 +125,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
           );
 
           return (
-            <>
+            <span key={routeParams.key}>
               <NavLink
                 to={{
                   pathname: routeParams.path,
@@ -165,7 +165,7 @@ const MenuAppBar: React.FC = (): ReturnType<React.FC> => {
                 <div>{drawRoutes(routeParams.children, padding + 1)}</div>
               )}
               <Divider />
-            </>
+            </span>
           );
         })}
       </List>

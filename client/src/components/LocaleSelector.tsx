@@ -59,7 +59,9 @@ const LocaleSelector: React.FC = (): ReturnType<React.FC> => {
         }}
       >
         {Object.values(SupportedLocale).map((value) => (
-          <MenuItem value={value as string}>{t(value)}</MenuItem>
+          <MenuItem key={value} value={value as string}>
+            {t(value)}
+          </MenuItem>
         ))}
       </Select>
     </div>

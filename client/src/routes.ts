@@ -9,6 +9,7 @@ export interface RouteConfig {
   search?: string;
   label?: string;
   component: any;
+  key: string;
   topLevel?: boolean;
   translate: string;
   children?: { [key: string]: RouteConfig };
@@ -25,6 +26,7 @@ const ROUTES: Routes = {
     label: "Home",
     exact: true,
     translate: "home",
+    key: "home",
   },
   weather: {
     component: WeatherContainer,
@@ -32,6 +34,7 @@ const ROUTES: Routes = {
     public: true,
     label: "Weather",
     translate: "weather",
+    key: "weather",
   },
 };
 

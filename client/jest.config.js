@@ -16,5 +16,5 @@ module.exports = {
   transformIgnorePatterns: ["!node_modules/react-runtime"],
   // Setup Enzyme
   snapshotSerializers: ["enzyme-to-json/serializer"],
-  setupFilesAfterEnv: ["<rootDir>/src/testConfig/setupEnzyme.ts"],
+  setupFilesAfterEnv: ["<rootDir>/testConfig/setupEnzyme.ts"],
 };
