@@ -19,6 +19,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import clsx from "clsx";
 import { WeatherGraph } from "./WeatherGraph";
 import { SearchBar } from "./SearchBar";
+import RadioTemperatureSelector from "./RadioTemperatureSelector";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    // margin: theme.spacing(1),
   },
   iconContainer: {
     display: "flex",
@@ -52,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
   weatherBlockContainerHidden: {
     display: "none",
   },
+  header: {
+    flexDirection: "row",
+    display: "flex",
+    justifyContent: "space-between",
+  },
 }));
 
 const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
@@ -60,9 +65,16 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [visibleIndexes, setVisibleIndexes] = useState([0, 1, 2]);
   const classes = useStyles();
+  const place = useSelector((state: RootState) => state.search.place);
+  const countryCode = useSelector(
+    (state: RootState) => state.search.countryCode
+  );
+  const locale = useSelector(
+    (state: RootState) => state.localeDetector.currentLocale
+  );
 
   useEffect(() => {
-    dispatch(getCurrentWeatherRequest("Munich", "de"));
+    dispatch(getCurrentWeatherRequest(place, countryCode));
     // eslint-disable-next-line
   }, []);
 
@@ -125,13 +137,18 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
 
   return (
     <div>
-      <Typography className={classes.currentTime}>
-        {weatherData.city.name}:{" "}
-        {moment
-          .unix(currentTime)
-          .utcOffset(weatherData.city.timezone / 60)
-          .format("LLLL")}
-      </Typography>
+      <div className={classes.header}>
+        <Typography className={classes.currentTime}>
+          {weatherData.city.name}
+          {" -> "}
+          {moment
+            .unix(currentTime)
+            .utcOffset(weatherData.city.timezone / 60)
+            .locale(locale)
+            .format("LLLL")}
+        </Typography>
+        <RadioTemperatureSelector />
+      </div>
       <SearchBar />
       <div className={classes.container}>
         <Grid container>
