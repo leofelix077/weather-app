@@ -1,9 +1,14 @@
 import React from "react";
 import { SupportedTemperature } from "../constants";
-import { Select, MenuItem, makeStyles, Typography } from "@material-ui/core";
+import {
+  makeStyles,
+  FormControl,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
-import { useTranslation } from "react-i18next";
 import { requestTemperatureChange } from "../redux/temperatureSelector";
 
 const useStyles = makeStyles((theme) => ({
@@ -23,22 +28,21 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "3E3E3E",
     padding: theme.spacing(1),
   },
-  temperatureText: {
+  languageText: {
     fontSize: 8,
     color: "white",
   },
 }));
 
-const TemperatureSelector: React.FC = (): ReturnType<React.FC> => {
+const RadioTemperatureSelector: React.FC = (): ReturnType<React.FC> => {
   const temperature = useSelector(
     (state: RootState) => state.temperature.temperature
   );
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { t } = useTranslation("temperature");
 
-  const handleSelectTemperature = async (
+  const handleSelectLanguage = async (
     event: React.ChangeEvent<{ value: unknown }>
   ): Promise<void> => {
     dispatch(
@@ -48,26 +52,21 @@ const TemperatureSelector: React.FC = (): ReturnType<React.FC> => {
 
   return (
     <div className={classes.list}>
-      <Typography className={classes.temperatureText}>{t("header")}</Typography>
-      <Select
-        labelId="temperature-selector"
-        id="temperature-selector"
-        value={temperature}
-        onChange={handleSelectTemperature}
-        style={{ width: "100%" }}
-        classes={{
-          select: classes.selectRoot,
-          selectMenu: classes.selectMenu,
-        }}
-      >
-        {Object.entries(SupportedTemperature).map(([key, value]) => (
-          <MenuItem key={key} value={value as string}>
-            {key}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl component="fieldset">
+        <RadioGroup
+          aria-label="gender"
+          name="gender1"
+          value={temperature}
+          style={{ flexDirection: "row", display: "flex" }}
+          onChange={handleSelectLanguage}
+        >
+          {Object.entries(SupportedTemperature).map(([key, value]) => (
+            <FormControlLabel value={value} control={<Radio />} label={key} />
+          ))}
+        </RadioGroup>
+      </FormControl>
     </div>
   );
 };
 
-export default TemperatureSelector;
+export default RadioTemperatureSelector;

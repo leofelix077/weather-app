@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
   },
   temperature: {
     color: "white",
-    fontSize: "6vw",
+    fontSize: "4vw",
   },
   additionalInfoText: {
     color: "white",
-    fontSize: "2vw",
+    fontSize: "1vw",
   },
   additionalInfoHeader: {
     color: "white",
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1vw",
   },
   feelsLike: {
-    fontSize: "2vw",
+    fontSize: "1.5vw",
   },
   containerSelected: {
     boxShadow: "2px 2px rgba(128,128,128,0.2)",
