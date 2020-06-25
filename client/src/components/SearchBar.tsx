@@ -41,40 +41,42 @@ export const SearchBar: React.FC = (): ReturnType<React.FC> => {
 
   return (
     <div className={classes.searchFieldContainer}>
-      <TextField
-        className={classes.searchField}
-        id="standard-search"
-        label={t("place")}
-        type="search"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        InputProps={{
-          className: classes.input,
-        }}
-        classes={{
-          root: classes.textFieldRoot,
-        }}
-        onChange={(event) => setCity(event.target.value)}
-        value={city}
-      />
-      <TextField
-        className={classes.searchField}
-        id="standard-search"
-        label={t("countryCode")}
-        type="search"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        InputProps={{
-          className: classes.input,
-        }}
-        classes={{
-          root: classes.textFieldRoot,
-        }}
-        onChange={(event) => setCountryCode(event.target.value)}
-        value={countryCode}
-      />
+      <div>
+        <TextField
+          className={classes.searchField}
+          id="standard-search"
+          label={t("place")}
+          type="search"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            className: classes.input,
+          }}
+          classes={{
+            root: classes.textFieldRoot,
+          }}
+          onChange={(event) => setCity(event.target.value)}
+          value={city}
+        />
+        <TextField
+          className={classes.searchField}
+          id="standard-search"
+          label={t("countryCode")}
+          type="search"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            className: classes.input,
+          }}
+          classes={{
+            root: classes.textFieldRoot,
+          }}
+          onChange={(event) => setCountryCode(event.target.value)}
+          value={countryCode}
+        />
+      </div>
       <div className={classes.buttonContainer}>
         <Button
           variant="contained"
