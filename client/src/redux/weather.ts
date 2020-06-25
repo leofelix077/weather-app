@@ -46,6 +46,9 @@ export interface WeatherDataPoint {
     speed: number;
     deg: number;
   };
+  rain?: {
+    [key: string]: number;
+  };
   sys: {
     pod: string;
   };
