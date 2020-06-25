@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   searchFieldContainer: {
     padding: theme.spacing(2),
     display: "flex",
-    alignItems: "row",
     justifyContent: "space-around",
   },
   textFieldRoot: {
@@ -26,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
   },
   buttonContainer: {
-    height: 24,
+    alignItems: "center",
+    display: "flex",
   },
   buttonRoot: {
     height: 28,
@@ -96,8 +96,9 @@ export const SearchBar: React.FC = (): ReturnType<React.FC> => {
         />
         <div className={classes.buttonContainer}>
           <Button
-            variant="contained"
+            variant="outlined"
             type="submit"
+            color="secondary"
             classes={{
               root: classes.buttonRoot,
             }}

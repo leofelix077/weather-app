@@ -81,7 +81,6 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
               },
             ],
           }}
-          redraw
           options={{
             maintainAspectRatio: true,
             scales: {
