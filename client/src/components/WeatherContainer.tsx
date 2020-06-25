@@ -63,12 +63,22 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   useEffect(() => {
     dispatch(getCurrentWeatherRequest("Munich", "de"));
   }, []);
+
   const weatherData = useSelector(
     (state: RootState) => state.weather.weatherForecast as WeatherData
   );
-  const locale = useSelector(
-    (state: RootState) => state.localeDetector.currentLocale
-  );
+  useEffect(() => {
+    if (weatherData?.list) {
+      setSelectedDay(
+        moment
+          .unix(weatherData.list[0].dt)
+          .utcOffset(weatherData.city.timezone)
+          .startOf("day")
+          .unix()
+      );
+    }
+  }, [weatherData]);
+
   const { error, processing } = useSelector(
     (state: RootState) => state.weather.request
   );
@@ -82,15 +92,6 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   }
   if (processing || !weatherData) {
     return <Loading />;
-  }
-  if (!selectedDay) {
-    setSelectedDay(
-      moment
-        .unix(weatherData.list[0].dt)
-        .utcOffset(weatherData.city.timezone)
-        .startOf("day")
-        .unix()
-    );
   }
 
   const formattedWeatherData = groupBy(
@@ -123,7 +124,11 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   return (
     <div>
       <Typography className={classes.currentTime}>
-        {moment.unix(currentTime).locale(locale).format("LLLL")}
+        {weatherData.city.name}:{" "}
+        {moment
+          .unix(currentTime)
+          .utcOffset(weatherData.city.timezone / 60)
+          .format("LLLL")}
       </Typography>
       <SearchBar />
       <div className={classes.container}>

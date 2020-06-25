@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
-import { takeEvery, put, call } from "redux-saga/effects";
+import { takeEvery, put, call, delay } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import produce from "immer";
 import { transport } from "../lib/transport";
@@ -147,6 +147,7 @@ export function weatherReducer(
       });
     case GET_WEATHER.ERROR:
       return produce(state, (newState) => {
+        newState.weatherForecast = null;
         newState.request.error = action.error;
         newState.request.success = false;
         newState.request.processing = action.false;
@@ -165,10 +166,9 @@ function* weatherApiSaga(action: WeatherLocation): any {
     const response: WeatherData = yield call(transport, {
       url: createWeatherApiCall(city, isoCountryCode),
     });
-    console.log(response);
+    yield delay(500); // simulate longer request
     yield put(getCurrentWeatherSuccess(response));
   } catch (error) {
-    console.log(error);
     console.log(error);
     yield put(getCurrentWeatherError(error.message));
   }
