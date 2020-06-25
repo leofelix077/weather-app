@@ -17,6 +17,10 @@ jobs:
             - client/node_modules
           key: v2-deps-weather-app-web-{{ checksum "client/package.json" }}
       - run: |
+          if [ ! -z "$CIRCLE_PULL_REQUEST" ] || [ "$CIRCLE_BRANCH" == "develop" ] || [ "$CIRCLE_BRANCH" == "master" ] ; then
+            cd client && yarn test
+          fi
+      - run: |
           cd client && yarn lint && yarn build:ci
       - persist_to_workspace:
           root: ~/repo

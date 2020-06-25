@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { FormEvent } from "react";
 import { TextField, makeStyles, Button } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCurrentWeatherRequest } from "../redux/weather";
+import { RootState } from "../redux/rootReducer";
+import {
+  setSearchStatePlace,
+  setSearchStateCountryCode,
+} from "../redux/search";
 
 const useStyles = makeStyles((theme) => ({
   searchField: {
@@ -26,25 +31,34 @@ const useStyles = makeStyles((theme) => ({
   buttonRoot: {
     height: 28,
   },
+  form: {
+    display: "flex",
+    flexDirection: "row",
+  },
 }));
 
 export const SearchBar: React.FC = (): ReturnType<React.FC> => {
   const classes = useStyles();
-  const [city, setCity] = useState("München");
-  const [countryCode, setCountryCode] = useState("de");
+
+  const countryCode = useSelector(
+    (state: RootState) => state.search.countryCode
+  );
+  const place = useSelector((state: RootState) => state.search.place);
+
   const { t } = useTranslation("place");
   const dispatch = useDispatch();
 
-  const handlePlaceChange = (): void => {
-    dispatch(getCurrentWeatherRequest(city, countryCode));
+  const handlePlaceChange = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    dispatch(getCurrentWeatherRequest(place, countryCode));
   };
 
   return (
     <div className={classes.searchFieldContainer}>
-      <div>
+      <form onSubmit={handlePlaceChange} className={classes.form}>
         <TextField
           className={classes.searchField}
-          id="standard-search"
+          id="place"
           label={t("place")}
           type="search"
           InputLabelProps={{
@@ -56,12 +70,14 @@ export const SearchBar: React.FC = (): ReturnType<React.FC> => {
           classes={{
             root: classes.textFieldRoot,
           }}
-          onChange={(event) => setCity(event.target.value)}
-          value={city}
+          onChange={(event) =>
+            dispatch(setSearchStatePlace(event.target.value))
+          }
+          value={place}
         />
         <TextField
           className={classes.searchField}
-          id="standard-search"
+          id="country"
           label={t("countryCode")}
           type="search"
           InputLabelProps={{
@@ -73,21 +89,23 @@ export const SearchBar: React.FC = (): ReturnType<React.FC> => {
           classes={{
             root: classes.textFieldRoot,
           }}
-          onChange={(event) => setCountryCode(event.target.value)}
+          onChange={(event) =>
+            dispatch(setSearchStateCountryCode(event.target.value))
+          }
           value={countryCode}
         />
-      </div>
-      <div className={classes.buttonContainer}>
-        <Button
-          variant="contained"
-          classes={{
-            root: classes.buttonRoot,
-          }}
-          onClick={handlePlaceChange}
-        >
-          {t("send")}
-        </Button>
-      </div>
+        <div className={classes.buttonContainer}>
+          <Button
+            variant="contained"
+            type="submit"
+            classes={{
+              root: classes.buttonRoot,
+            }}
+          >
+            {t("send")}
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };

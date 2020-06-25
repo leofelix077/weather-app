@@ -47,14 +47,13 @@ export const initialState: SupportedTemperatureState = {
   temperature: SupportedTemperature.Fahrenheit,
 };
 
-export function temperatureSelector(
+export function temperatureReducer(
   state = initialState,
   action: any
 ): SupportedTemperatureState {
   switch (action.type) {
     case TEMPERATURE_CHANGE.SET:
       return produce(state, (newState) => {
-        console.log(action);
         newState.temperature = action.temperature;
       });
     default:

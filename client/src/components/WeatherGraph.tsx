@@ -10,18 +10,18 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
 
 interface WeatherGraphProps {
-  data: WeatherDataPoint[];
+  data: WeatherDataPoint[] | null;
   utcOffset: number;
 }
 
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2),
-    width: "60vw",
+    width: "80vw",
     display: "flex",
     position: "relative",
     justifyContent: "center",
-    height: "30vh",
+    height: "40vh",
   },
   root: {
     width: "100%",
@@ -47,11 +47,20 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
     return null;
   }
 
-  const labels = data.map((dataPoint) =>
-    moment
-      .unix(dataPoint.dt)
-      .utcOffset(utcOffset / 60)
-      .format("HH:mm")
+  const formattedChart = data.reduce(
+    (acc: { labels: string[]; data: number[] }, dataPoint) => {
+      acc.labels.push(
+        moment
+          .unix(dataPoint.dt)
+          .utcOffset(utcOffset / 60)
+          .format("HH:mm")
+      );
+      acc.data.push(
+        convertTemperature(dataPoint.main.temp, preferredTemperature)
+      );
+      return acc;
+    },
+    { labels: [], data: [] }
   );
 
   return (
@@ -59,7 +68,7 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
       <div className={classes.container}>
         <Bar
           data={{
-            labels,
+            labels: formattedChart.labels,
             datasets: [
               {
                 label: t("graphLabel"),
@@ -68,12 +77,11 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
                 borderWidth: 1,
                 hoverBackgroundColor: "rgba(0,99,0,0.4)",
                 hoverBorderColor: "rgba(0,99,0,1)",
-                data: data.map((dataPoint) =>
-                  convertTemperature(dataPoint.main.temp, preferredTemperature)
-                ),
+                data: formattedChart.data,
               },
             ],
           }}
+          redraw
           options={{
             maintainAspectRatio: true,
             scales: {
@@ -93,6 +101,10 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
 };
 
 WeatherGraph.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
   utcOffset: PropTypes.number.isRequired,
+};
+
+WeatherGraph.defaultProps = {
+  data: null,
 };

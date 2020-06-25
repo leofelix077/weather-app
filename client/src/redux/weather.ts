@@ -135,7 +135,6 @@ export function weatherReducer(
   switch (action.type) {
     case GET_WEATHER.REQUEST:
       return produce(state, (newState) => {
-        console.warn(newState);
         newState.request.processing = true;
       });
     case GET_WEATHER.SUCCESS:

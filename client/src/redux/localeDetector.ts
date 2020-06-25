@@ -46,7 +46,7 @@ export const initialState: CurrentLocale = {
   currentLocale: SupportedLocale.English,
 };
 
-export function localeDetector(
+export function localeDetectorReducer(
   state = initialState,
   action: any
 ): CurrentLocale {
