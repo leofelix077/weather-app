@@ -17,12 +17,11 @@ interface WeatherGraphProps {
 const useStyles = makeStyles((theme) => ({
   container: {
     padding: theme.spacing(2),
-    width: "80vw",
+    width: "60vw",
     display: "flex",
     position: "relative",
-    alignItems: "center",
     justifyContent: "center",
-    height: "40vh",
+    height: "30vh",
   },
   root: {
     width: "100%",
@@ -75,8 +74,6 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
               },
             ],
           }}
-          width={document.documentElement.clientWidth / 3}
-          height={document.documentElement.clientWidth / 6}
           options={{
             maintainAspectRatio: true,
             scales: {

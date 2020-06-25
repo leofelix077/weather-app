@@ -8,7 +8,8 @@
           "node": "current"
         }
       }
-    ]
+    ],
+    "@babel/preset-react"
   ],
   "plugins": [
     [
@@ -20,7 +21,14 @@
   ],
   "env": {
     "test": {
-      "sourceMaps": "inline"
+      "sourceMaps": "inline",
+      "presets": [
+        "@babel/preset-env",
+        "@babel/preset-typescript",
+        "@babel/preset-react"
+      ],
+      "plugins": ["transform-export-extensions"],
+      "only": ["./**/*.js", "node_modules/jest-runtime"]
     }
   }
 }
