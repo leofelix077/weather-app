@@ -82,6 +82,7 @@ export const WeatherGraph: React.FC<WeatherGraphProps> = ({
             ],
           }}
           options={{
+            maintainAspectRatio: true,
             scales: {
               yAxes: [
                 {

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#3C3C3C",
   },
   currentTime: {
-    fontSize: "2vw",
+    fontSize: 16,
     padding: theme.spacing(2),
     paddingBottom: theme.spacing(0),
     paddingTop: theme.spacing(1),

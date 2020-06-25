@@ -29,8 +29,8 @@ const theme = createMuiTheme({
     },
     secondary: {
       light: "#ff6434",
-      main: "#660000",
-      dark: "#00ff02",
+      main: "#00fa02",
+      dark: "#008800",
       contrastText: "#ffffff",
     },
   },
@@ -44,6 +44,17 @@ const theme = createMuiTheme({
     MuiPaper: {
       root: {
         backgroundColor: "#1a1a1a",
+      },
+    },
+    MuiButton: {
+      outlinedSecondary: {
+        color: "#00fa02",
+        borderColor: "#008800",
+      },
+    },
+    MuiRadio: {
+      colorSecondary: {
+        color: "#008800",
       },
     },
   },
