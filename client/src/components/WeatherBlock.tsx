@@ -128,7 +128,7 @@ const WeatherBlock: React.FC<WeatherBlockProps> = ({
           .locale(locale)
           .format("L")}
       </Typography>
-      <Typography className={classes.temperature}>
+      <Typography className={classes.temperature} id="temperature-text">
         {finalTemperature} °{preferredTemperature}
       </Typography>
       <div>
