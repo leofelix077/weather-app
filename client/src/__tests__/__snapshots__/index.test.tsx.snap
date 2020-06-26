@@ -51,9 +51,9 @@ exports[`Should render each weather block with correct temperature renders Weath
         },
       ]
     }
-    day={0}
+    day={1593043200}
     isSelected={true}
-    utcOffset={0}
+    utcOffset={7200}
   >
     <div
       className="makeStyles-container-1 makeStyles-containerSelected-10"
@@ -101,12 +101,13 @@ exports[`Should render each weather block with correct temperature renders Weath
           <p
             className="MuiTypography-root makeStyles-date-11 MuiTypography-body1"
           >
-            01/01/1970
+            25/06/2020
           </p>
         </ForwardRef(Typography)>
       </WithStyles(ForwardRef(Typography))>
       <WithStyles(ForwardRef(Typography))
         className="makeStyles-temperature-2"
+        id="temperature-text"
       >
         <ForwardRef(Typography)
           className="makeStyles-temperature-2"
@@ -144,9 +145,11 @@ exports[`Should render each weather block with correct temperature renders Weath
               "subtitle2": "MuiTypography-subtitle2",
             }
           }
+          id="temperature-text"
         >
           <p
             className="MuiTypography-root makeStyles-temperature-2 MuiTypography-body1"
+            id="temperature-text"
           >
             18
              °

@@ -1,4 +1,6 @@
 import { WeatherData } from "../redux/weather";
+import { RootState } from "../redux/rootReducer";
+import { SupportedLocale, SupportedTemperature } from "../constants";
 
 /* eslint-disable @typescript-eslint/camelcase */
 export const getMockData = (): WeatherData => ({
@@ -1397,4 +1399,28 @@ export const getMockData = (): WeatherData => ({
     sunrise: 1593054883,
     sunset: 1593112676,
   },
+});
+
+export const getRootStateMock = (
+  overrides?: Partial<RootState>
+): RootState => ({
+  localeDetector: {
+    currentLocale: SupportedLocale.English,
+  },
+  search: {
+    countryCode: "DE",
+    place: "München",
+  },
+  temperature: {
+    temperature: SupportedTemperature.Celsius,
+  },
+  weather: {
+    request: {
+      error: null,
+      processing: false,
+      success: true,
+    },
+    weatherForecast: getMockData(),
+  },
+  ...overrides,
 });
