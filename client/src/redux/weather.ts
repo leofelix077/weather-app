@@ -14,7 +14,7 @@ export const GET_WEATHER = {
 };
 
 interface WeatherLocation {
-  city: string;
+  place: string;
   isoCountryCode: string;
 }
 
@@ -55,7 +55,7 @@ export interface WeatherDataPoint {
   dt_txt: string;
 }
 
-export interface WeatherCityInformation {
+export interface WeatherPlaceInformation {
   id: number;
   name: string;
   coord: { lat: number; lon: number };
@@ -71,7 +71,7 @@ export interface WeatherData {
   message: number;
   cnt: number;
   list: WeatherDataPoint[];
-  city: WeatherCityInformation;
+  city: WeatherPlaceInformation;
 }
 
 // actions
@@ -80,11 +80,11 @@ interface GetCurrentWeatherRequest extends WeatherLocation {
 }
 
 export const getCurrentWeatherRequest = (
-  city: string,
+  place: string,
   isoCountryCode: string
 ): GetCurrentWeatherRequest => ({
   type: GET_WEATHER.REQUEST,
-  city,
+  place,
   isoCountryCode,
 });
 
@@ -162,11 +162,11 @@ export function weatherReducer(
 // saga
 
 function* weatherApiSaga(action: WeatherLocation): any {
-  const { city, isoCountryCode } = action;
+  const { place, isoCountryCode } = action;
 
   try {
     const response: WeatherData = yield call(transport, {
-      url: createWeatherApiCall(city, isoCountryCode),
+      url: createWeatherApiCall(place, isoCountryCode),
     });
     yield delay(500); // simulate longer request
     yield put(getCurrentWeatherSuccess(response));

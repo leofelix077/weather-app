@@ -28,7 +28,7 @@ export default {
     weather: "Weather",
   },
   place: {
-    place: "City",
+    place: "Place",
     countryCode: "Country Code",
     send: "Send",
   },

@@ -28,8 +28,8 @@ export default {
     weather: "Previsão",
   },
   place: {
-    place: "Cidade",
-    countryCode: "Código do País",
+    place: "Local",
+    countryCode: "Cód. País",
     send: "Enviar",
   },
 };
