@@ -656,3 +656,300 @@ Array [
   "21:00",
 ]
 `;
+
+exports[`Should render each weather block with correct temperature renders WeatherGraph correctly for differentLocale 3`] = `
+Object {
+  "children": <Unknown
+    data={
+      Array [
+        Object {
+          "clouds": Object {
+            "all": 10,
+          },
+          "dt": 1593313200,
+          "dt_txt": "2020-06-28 03:00:00",
+          "main": Object {
+            "feels_like": 281.66,
+            "grnd_level": 1020,
+            "humidity": 68,
+            "pressure": 1024,
+            "sea_level": 1024,
+            "temp": 284.45,
+            "temp_kf": 0,
+            "temp_max": 284.45,
+            "temp_min": 284.45,
+          },
+          "sys": Object {
+            "pod": "n",
+          },
+          "weather": Array [
+            Object {
+              "description": "clear sky",
+              "icon": "01n",
+              "id": 800,
+              "main": "Clear",
+            },
+          ],
+          "wind": Object {
+            "deg": 156,
+            "speed": 2.56,
+          },
+        },
+        Object {
+          "clouds": Object {
+            "all": 17,
+          },
+          "dt": 1593324000,
+          "dt_txt": "2020-06-28 06:00:00",
+          "main": Object {
+            "feels_like": 281.23,
+            "grnd_level": 1020,
+            "humidity": 73,
+            "pressure": 1024,
+            "sea_level": 1024,
+            "temp": 283.34,
+            "temp_kf": 0,
+            "temp_max": 283.34,
+            "temp_min": 283.34,
+          },
+          "sys": Object {
+            "pod": "n",
+          },
+          "weather": Array [
+            Object {
+              "description": "few clouds",
+              "icon": "02n",
+              "id": 801,
+              "main": "Clouds",
+            },
+          ],
+          "wind": Object {
+            "deg": 195,
+            "speed": 1.57,
+          },
+        },
+        Object {
+          "clouds": Object {
+            "all": 86,
+          },
+          "dt": 1593334800,
+          "dt_txt": "2020-06-28 09:00:00",
+          "main": Object {
+            "feels_like": 280.74,
+            "grnd_level": 1020,
+            "humidity": 77,
+            "pressure": 1024,
+            "sea_level": 1024,
+            "temp": 282.82,
+            "temp_kf": 0,
+            "temp_max": 282.82,
+            "temp_min": 282.82,
+          },
+          "sys": Object {
+            "pod": "n",
+          },
+          "weather": Array [
+            Object {
+              "description": "overcast clouds",
+              "icon": "04n",
+              "id": 804,
+              "main": "Clouds",
+            },
+          ],
+          "wind": Object {
+            "deg": 190,
+            "speed": 1.61,
+          },
+        },
+        Object {
+          "clouds": Object {
+            "all": 93,
+          },
+          "dt": 1593345600,
+          "dt_txt": "2020-06-28 12:00:00",
+          "main": Object {
+            "feels_like": 282.87,
+            "grnd_level": 1022,
+            "humidity": 72,
+            "pressure": 1026,
+            "sea_level": 1026,
+            "temp": 284.47,
+            "temp_kf": 0,
+            "temp_max": 284.47,
+            "temp_min": 284.47,
+          },
+          "sys": Object {
+            "pod": "d",
+          },
+          "weather": Array [
+            Object {
+              "description": "overcast clouds",
+              "icon": "04d",
+              "id": 804,
+              "main": "Clouds",
+            },
+          ],
+          "wind": Object {
+            "deg": 147,
+            "speed": 1.12,
+          },
+        },
+        Object {
+          "clouds": Object {
+            "all": 19,
+          },
+          "dt": 1593356400,
+          "dt_txt": "2020-06-28 15:00:00",
+          "main": Object {
+            "feels_like": 285.32,
+            "grnd_level": 1021,
+            "humidity": 55,
+            "pressure": 1025,
+            "sea_level": 1025,
+            "temp": 288.08,
+            "temp_kf": 0,
+            "temp_max": 288.08,
+            "temp_min": 288.08,
+          },
+          "sys": Object {
+            "pod": "d",
+          },
+          "weather": Array [
+            Object {
+              "description": "few clouds",
+              "icon": "02d",
+              "id": 801,
+              "main": "Clouds",
+            },
+          ],
+          "wind": Object {
+            "deg": 140,
+            "speed": 2.62,
+          },
+        },
+        Object {
+          "clouds": Object {
+            "all": 21,
+          },
+          "dt": 1593367200,
+          "dt_txt": "2020-06-28 18:00:00",
+          "main": Object {
+            "feels_like": 285.14,
+            "grnd_level": 1020,
+            "humidity": 51,
+            "pressure": 1023,
+            "sea_level": 1023,
+            "temp": 288.92,
+            "temp_kf": 0,
+            "temp_max": 288.92,
+            "temp_min": 288.92,
+          },
+          "sys": Object {
+            "pod": "d",
+          },
+          "weather": Array [
+            Object {
+              "description": "few clouds",
+              "icon": "02d",
+              "id": 801,
+              "main": "Clouds",
+            },
+          ],
+          "wind": Object {
+            "deg": 139,
+            "speed": 3.98,
+          },
+        },
+        Object {
+          "clouds": Object {
+            "all": 100,
+          },
+          "dt": 1593378000,
+          "dt_txt": "2020-06-28 21:00:00",
+          "main": Object {
+            "feels_like": 283.05,
+            "grnd_level": 1020,
+            "humidity": 60,
+            "pressure": 1024,
+            "sea_level": 1024,
+            "temp": 286.68,
+            "temp_kf": 0,
+            "temp_max": 286.68,
+            "temp_min": 286.68,
+          },
+          "sys": Object {
+            "pod": "n",
+          },
+          "weather": Array [
+            Object {
+              "description": "overcast clouds",
+              "icon": "04n",
+              "id": 804,
+              "main": "Clouds",
+            },
+          ],
+          "wind": Object {
+            "deg": 129,
+            "speed": 3.85,
+          },
+        },
+        Object {
+          "clouds": Object {
+            "all": 100,
+          },
+          "dt": 1593388800,
+          "dt_txt": "2020-06-29 00:00:00",
+          "main": Object {
+            "feels_like": 281.76,
+            "grnd_level": 1021,
+            "humidity": 62,
+            "pressure": 1025,
+            "sea_level": 1025,
+            "temp": 285.78,
+            "temp_kf": 0,
+            "temp_max": 285.78,
+            "temp_min": 285.78,
+          },
+          "sys": Object {
+            "pod": "n",
+          },
+          "weather": Array [
+            Object {
+              "description": "overcast clouds",
+              "icon": "04n",
+              "id": 804,
+              "main": "Clouds",
+            },
+          ],
+          "wind": Object {
+            "deg": 110,
+            "speed": 4.29,
+          },
+        },
+      ]
+    }
+    utcOffset={-10800}
+  />,
+  "store": Object {
+    "clearActions": [Function],
+    "dispatch": [Function],
+    "getActions": [Function],
+    "getState": [Function],
+    "replaceReducer": [Function],
+    "subscribe": [Function],
+  },
+}
+`;
+
+exports[`Should render each weather block with correct temperature renders WeatherGraph correctly for differentLocale 4`] = `
+Array [
+  "00:00",
+  "03:00",
+  "06:00",
+  "09:00",
+  "12:00",
+  "15:00",
+  "18:00",
+  "21:00",
+]
+`;

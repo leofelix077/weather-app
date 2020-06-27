@@ -11,6 +11,7 @@ import "jsdom-global/register";
 import mockdate from "mockdate";
 import { WeatherGraph } from "../components/WeatherGraph";
 import { formatWeatherData, formatSelectedDay } from "../lib/formatWeatherData";
+import moment from "moment";
 
 const mockStore = configureMockStore();
 
@@ -73,7 +74,27 @@ describe("Should render each weather block with correct temperature", () => {
     );
     expect(wrapper.props()).toMatchSnapshot();
     const element = wrapper.find("Bar").props();
-    expect((element as any).data.labels.slice(1)).not.toContain("00:00");
-    expect((element as any).data.labels).toMatchSnapshot();
+    const elementData: string[] = (element as any).data.labels;
+    expect(elementData.slice(1)).not.toContain("00:00");
+    expect(elementData).toMatchSnapshot();
+
+    const wrapper2 = mount(
+      <Provider store={storeProvider}>
+        <WeatherGraph
+          data={
+            formattedWeatherData[moment.unix(selectedDay).add(1, "day").unix()]
+          }
+          utcOffset={weatherData.city.timezone}
+        />
+      </Provider>
+    );
+    expect(wrapper2.props()).toMatchSnapshot();
+    const element2 = wrapper2.find("Bar").props();
+    const element2Data: string[] = (element2 as any).data.labels;
+
+    expect(element2Data.slice(1)).not.toContain("00:00");
+    expect(element2Data[0]).toBe("00:00");
+    expect(element2Data[element2Data.length - 1]).toBe("21:00");
+    expect(element2Data).toMatchSnapshot();
   });
 });
