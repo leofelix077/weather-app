@@ -177,7 +177,10 @@ function* weatherApiSaga(action: WeatherLocation): any {
 
   const lastPlace = yield select((state: RootState) => state.search.lastPlace);
 
-  if (place !== lastPlace) {
+  if (
+    !lastPlace ||
+    (place.lat !== lastPlace.lat && place.lng !== lastPlace.lng)
+  ) {
     try {
       const response: WeatherData = yield call(transport, {
         url: createWeatherApiCall(place.lat, place.lng),
