@@ -54,15 +54,25 @@ export const SearchBar: React.FC = (): ReturnType<React.FC> => {
 
   const { t } = useTranslation("place");
 
-  const handleSelect = (selectedAddress: string): void => {
-    geocodeByAddress(selectedAddress).then((results) =>
-      dispatch(
-        getCurrentWeatherRequest({
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng(),
-        })
-      )
-    );
+  const handleSelect = (selectedAddress: string, placeId?: string): void => {
+    geocodeByAddress(selectedAddress).then((results) => {
+      const locationSelected = {
+        lat: results[0].geometry.location.lat(),
+        lng: results[0].geometry.location.lng(),
+      };
+      if (placeId) {
+        const clickedLocation = results.find(
+          (result) => result.place_id === placeId
+        );
+        if (clickedLocation) {
+          locationSelected.lat = clickedLocation.geometry.location.lat();
+          locationSelected.lng = clickedLocation.geometry.location.lng();
+          setAddress(clickedLocation.formatted_address);
+        }
+      }
+
+      dispatch(getCurrentWeatherRequest(locationSelected));
+    });
   };
 
   return (
