@@ -6,7 +6,7 @@ import produce from "immer";
 import { transport } from "../lib/transport";
 import { createWeatherApiCall } from "../lib/api";
 import { RootState } from "./rootReducer";
-import { setLastSearchState } from "./search";
+import { setLastSearchState, GeolocationCoordinates } from "./search";
 
 // types
 export const GET_WEATHER = {
@@ -17,8 +17,7 @@ export const GET_WEATHER = {
 };
 
 interface WeatherLocation {
-  place: string;
-  isoCountryCode: string;
+  place: GeolocationCoordinates;
 }
 
 export interface WeatherDescription {
@@ -83,12 +82,10 @@ interface GetCurrentWeatherRequest extends WeatherLocation {
 }
 
 export const getCurrentWeatherRequest = (
-  place: string,
-  isoCountryCode: string
+  place: GeolocationCoordinates
 ): GetCurrentWeatherRequest => ({
   type: GET_WEATHER.REQUEST,
   place,
-  isoCountryCode,
 });
 
 interface GetCurrentWeatherSuccess {
@@ -176,24 +173,21 @@ export function weatherReducer(
 // saga
 
 function* weatherApiSaga(action: WeatherLocation): any {
-  const { place, isoCountryCode } = action;
+  const { place } = action;
 
   const lastPlace = yield select((state: RootState) => state.search.lastPlace);
-  const lastCountryCode = yield select(
-    (state: RootState) => state.search.lastCountryCode
-  );
 
-  if (place !== lastPlace || isoCountryCode !== lastCountryCode) {
+  if (place !== lastPlace) {
     try {
       const response: WeatherData = yield call(transport, {
-        url: createWeatherApiCall(place, isoCountryCode),
+        url: createWeatherApiCall(place.lat, place.lng),
       });
       yield delay(500); // simulate longer request
       yield put(getCurrentWeatherSuccess(response));
     } catch (error) {
       yield put(getCurrentWeatherError(error.message));
     } finally {
-      yield put(setLastSearchState(isoCountryCode, place));
+      yield put(setLastSearchState(place));
     }
   } else {
     yield put(getCurrentWeatherCancel());

@@ -79,16 +79,14 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   const [visibleIndexes, setVisibleIndexes] = useState([0, 1, 2]);
   const classes = useStyles();
   const place = useSelector((state: RootState) => state.search.place);
-  const countryCode = useSelector(
-    (state: RootState) => state.search.countryCode
-  );
+
   const locale = useSelector(
     (state: RootState) => state.localeDetector.currentLocale
   );
 
   useEffect(() => {
-    if (countryCode && place) {
-      dispatch(getCurrentWeatherRequest(place, countryCode));
+    if (place) {
+      dispatch(getCurrentWeatherRequest(place));
     }
     // eslint-disable-next-line
   }, []);
@@ -131,7 +129,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
     );
   }
 
-  if (!countryCode && !place && !weatherData) {
+  if (!place && !weatherData) {
     return <SearchBar />;
   }
 

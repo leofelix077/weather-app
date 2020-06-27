@@ -30,7 +30,6 @@ export default {
   },
   place: {
     place: "Local",
-    countryCode: "Cód. País",
     send: "Enviar",
   },
 };
