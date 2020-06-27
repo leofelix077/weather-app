@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 8,
   },
   appBar: {
-    backgroundColor: "transparent",
+    backgroundColor: "#111",
     display: "flex",
   },
   appTitle: {
