@@ -13,6 +13,7 @@ export default {
   errors: {
     network: "Oops. Um erro ocorreu. Por favor tente novamente",
     "temperature-unsupported": "Temperatura não suportada",
+    "place-not-found": "Local não encontrado :(",
   },
   general: {
     loading: "Carregando...",

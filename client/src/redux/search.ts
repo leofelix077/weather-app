@@ -5,12 +5,15 @@ import produce from "immer";
 export const SEARCH = {
   SET_PLACE: "SEARCH.SET_PLACE",
   SET_COUNTRY_CODE: "SEARCH.SET_COUNTRY_CODE",
+  SET_LAST_SEARCH: "SEARCH.SET_LAST_SEARCH",
 };
 
 // actions
 interface SearchState {
   place: string;
   countryCode: string;
+  lastPlace: string;
+  lastCountryCode: string;
 }
 
 interface SetSearchStatePlace {
@@ -35,11 +38,28 @@ export const setSearchStateCountryCode = (
   countryCode,
 });
 
+interface SetLastSearchState {
+  type: typeof SEARCH.SET_LAST_SEARCH;
+  countryCode: string;
+  place: string;
+}
+
+export const setLastSearchState = (
+  countryCode: string,
+  place: string
+): SetLastSearchState => ({
+  type: SEARCH.SET_LAST_SEARCH,
+  countryCode,
+  place,
+});
+
 // reducer
 
 export const initialState: SearchState = {
   place: "München",
   countryCode: "DE",
+  lastPlace: "",
+  lastCountryCode: "",
 };
 
 export function searchReducer(state = initialState, action: any): SearchState {
@@ -51,6 +71,11 @@ export function searchReducer(state = initialState, action: any): SearchState {
     case SEARCH.SET_COUNTRY_CODE:
       return produce(state, (newState) => {
         newState.countryCode = action.countryCode;
+      });
+    case SEARCH.SET_LAST_SEARCH:
+      return produce(state, (newState) => {
+        newState.lastPlace = action.place;
+        newState.lastCountryCode = action.countryCode;
       });
     default:
       return state;

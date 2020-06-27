@@ -13,6 +13,7 @@ export default {
   errors: {
     network: "Oh No! An error occurred. Plese try again",
     "temperature-unsupported": "Unsupported Temperature",
+    "place-not-found": "Place not found :(",
   },
   general: {
     loading: "Loading...",
