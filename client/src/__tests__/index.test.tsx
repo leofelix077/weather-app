@@ -15,7 +15,7 @@ import moment from "moment";
 
 const mockStore = configureMockStore();
 
-describe("Should render each weather block with correct temperature", () => {
+describe("Forecast for locale, day and utc offset", () => {
   it("renders WeatherBlock correctly", () => {
     mockdate.set(1593118700000);
     const store = getRootStateMock();
