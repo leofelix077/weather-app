@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should render each weather block with correct temperature renders WeatherBlock correctly 1`] = `
+exports[`Forecast for locale, day and utc offset renders WeatherBlock correctly 1`] = `
 <Provider
   store={
     Object {
@@ -462,7 +462,7 @@ exports[`Should render each weather block with correct temperature renders Weath
 </Provider>
 `;
 
-exports[`Should render each weather block with correct temperature renders WeatherGraph correctly for differentLocale 1`] = `
+exports[`Forecast for locale, day and utc offset renders WeatherGraph correctly for differentLocale 1`] = `
 Object {
   "children": <Unknown
     data={
@@ -647,7 +647,7 @@ Object {
 }
 `;
 
-exports[`Should render each weather block with correct temperature renders WeatherGraph correctly for differentLocale 2`] = `
+exports[`Forecast for locale, day and utc offset renders WeatherGraph correctly for differentLocale 2`] = `
 Array [
   "09:00",
   "12:00",
@@ -657,7 +657,7 @@ Array [
 ]
 `;
 
-exports[`Should render each weather block with correct temperature renders WeatherGraph correctly for differentLocale 3`] = `
+exports[`Forecast for locale, day and utc offset renders WeatherGraph correctly for differentLocale 3`] = `
 Object {
   "children": <Unknown
     data={
@@ -941,7 +941,7 @@ Object {
 }
 `;
 
-exports[`Should render each weather block with correct temperature renders WeatherGraph correctly for differentLocale 4`] = `
+exports[`Forecast for locale, day and utc offset renders WeatherGraph correctly for differentLocale 4`] = `
 Array [
   "00:00",
   "03:00",

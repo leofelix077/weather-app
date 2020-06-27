@@ -12,6 +12,8 @@ import mockdate from "mockdate";
 import { WeatherGraph } from "../components/WeatherGraph";
 import { formatWeatherData, formatSelectedDay } from "../lib/formatWeatherData";
 import moment from "moment";
+import { convertTemperature } from "../lib/converter";
+import { SupportedTemperature, ABSOLUTE_ZERO } from "../constants";
 
 const mockStore = configureMockStore();
 
@@ -77,6 +79,7 @@ describe("Forecast for locale, day and utc offset", () => {
     const elementData: string[] = (element as any).data.labels;
     expect(elementData.slice(1)).not.toContain("00:00");
     expect(elementData).toMatchSnapshot();
+    wrapper.unmount();
 
     const wrapper2 = mount(
       <Provider store={storeProvider}>
@@ -96,5 +99,32 @@ describe("Forecast for locale, day and utc offset", () => {
     expect(element2Data[0]).toBe("00:00");
     expect(element2Data[element2Data.length - 1]).toBe("21:00");
     expect(element2Data).toMatchSnapshot();
+    wrapper2.unmount();
+  });
+
+  it("should convert temperature correctly", () => {
+    const fahrenheitZeroTemperature = convertTemperature(
+      ABSOLUTE_ZERO * -1,
+      SupportedTemperature.Fahrenheit
+    );
+    const celsiusZeroTemperature = convertTemperature(
+      ABSOLUTE_ZERO * -1,
+      SupportedTemperature.Celsius
+    );
+
+    expect(fahrenheitZeroTemperature).toEqual(32);
+    expect(celsiusZeroTemperature).toEqual(0);
+
+    const fahrenheitBoilWaterTemperature = convertTemperature(
+      ABSOLUTE_ZERO * -1 + 100,
+      SupportedTemperature.Fahrenheit
+    );
+    const celsiusBoilWaterTemperature = convertTemperature(
+      ABSOLUTE_ZERO * -1 + 100,
+      SupportedTemperature.Celsius
+    );
+
+    expect(fahrenheitBoilWaterTemperature).toEqual(212);
+    expect(celsiusBoilWaterTemperature).toEqual(100);
   });
 });
