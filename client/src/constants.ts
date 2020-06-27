@@ -8,6 +8,8 @@ export enum SupportedTemperature {
   Fahrenheit = "F",
 }
 
+export const ABSOLUTE_ZERO = -273.15;
+
 export const LOCALE_KEY = "locale";
 
 export const TEMPERATURE_KEY = "temperature";
