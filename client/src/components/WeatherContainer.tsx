@@ -21,7 +21,7 @@ import { WeatherGraph } from "./WeatherGraph";
 import { SearchBar } from "./SearchBar";
 import RadioTemperatureSelector from "./RadioTemperatureSelector";
 import { Dictionary } from "lodash";
-import { formatSelectedDay } from "../lib/formatWeatherData";
+import { formatSelectedDay } from "../lib/formatter";
 
 const useStyles = makeStyles((theme) => ({
   container: {

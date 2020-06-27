@@ -10,7 +10,7 @@ import configureMockStore from "redux-mock-store";
 import "jsdom-global/register";
 import mockdate from "mockdate";
 import { WeatherGraph } from "../components/WeatherGraph";
-import { formatWeatherData, formatSelectedDay } from "../lib/formatWeatherData";
+import { formatWeatherData, formatSelectedDay } from "../lib/formatter";
 import moment from "moment";
 import { convertTemperature } from "../lib/converter";
 import { SupportedTemperature, ABSOLUTE_ZERO } from "../constants";
