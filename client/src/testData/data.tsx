@@ -1408,10 +1408,11 @@ export const getRootStateMock = (
     currentLocale: SupportedLocale.English,
   },
   search: {
-    countryCode: "DE",
-    place: "München",
-    lastPlace: "",
-    lastCountryCode: "",
+    place: {
+      lat: 48.1351253,
+      lng: 11.5819805,
+    },
+    lastPlace: null,
   },
   temperature: {
     temperature: SupportedTemperature.Celsius,

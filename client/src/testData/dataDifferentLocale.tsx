@@ -1387,10 +1387,8 @@ export const getRootStateMockDifferentLocale = (
     currentLocale: SupportedLocale.Portuguese,
   },
   search: {
-    countryCode: "BR",
-    place: "São Leopoldo",
-    lastPlace: "",
-    lastCountryCode: "",
+    place: { lat: -29.7510572, lng: -51.2131742 },
+    lastPlace: null,
   },
   temperature: {
     temperature: SupportedTemperature.Fahrenheit,

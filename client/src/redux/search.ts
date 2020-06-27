@@ -8,58 +8,49 @@ export const SEARCH = {
   SET_LAST_SEARCH: "SEARCH.SET_LAST_SEARCH",
 };
 
+export interface GeolocationCoordinates {
+  lat: number;
+  lng: number;
+}
+
 // actions
 interface SearchState {
-  place: string;
-  countryCode: string;
-  lastPlace: string;
-  lastCountryCode: string;
+  place: GeolocationCoordinates;
+  lastPlace: GeolocationCoordinates | null;
 }
 
 interface SetSearchStatePlace {
   type: typeof SEARCH.SET_PLACE;
-  place: string;
+  place: GeolocationCoordinates;
 }
 
-export const setSearchStatePlace = (place: string): SetSearchStatePlace => ({
+export const setSearchStatePlace = (
+  place: GeolocationCoordinates
+): SetSearchStatePlace => ({
   type: SEARCH.SET_PLACE,
   place,
 });
 
-interface SetSearchStateCountryCode {
-  type: typeof SEARCH.SET_COUNTRY_CODE;
-  countryCode: string;
-}
-
-export const setSearchStateCountryCode = (
-  countryCode: string
-): SetSearchStateCountryCode => ({
-  type: SEARCH.SET_COUNTRY_CODE,
-  countryCode,
-});
-
 interface SetLastSearchState {
   type: typeof SEARCH.SET_LAST_SEARCH;
-  countryCode: string;
-  place: string;
+  place: GeolocationCoordinates;
 }
 
 export const setLastSearchState = (
-  countryCode: string,
-  place: string
+  place: GeolocationCoordinates
 ): SetLastSearchState => ({
   type: SEARCH.SET_LAST_SEARCH,
-  countryCode,
   place,
 });
 
 // reducer
 
 export const initialState: SearchState = {
-  place: "München",
-  countryCode: "DE",
-  lastPlace: "",
-  lastCountryCode: "",
+  place: {
+    lat: 48.1351253,
+    lng: 11.5819805,
+  },
+  lastPlace: null,
 };
 
 export function searchReducer(state = initialState, action: any): SearchState {
@@ -68,14 +59,10 @@ export function searchReducer(state = initialState, action: any): SearchState {
       return produce(state, (newState) => {
         newState.place = action.place;
       });
-    case SEARCH.SET_COUNTRY_CODE:
-      return produce(state, (newState) => {
-        newState.countryCode = action.countryCode;
-      });
+
     case SEARCH.SET_LAST_SEARCH:
       return produce(state, (newState) => {
         newState.lastPlace = action.place;
-        newState.lastCountryCode = action.countryCode;
       });
     default:
       return state;

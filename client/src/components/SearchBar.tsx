@@ -1,13 +1,13 @@
-import React, { FormEvent } from "react";
-import { TextField, makeStyles, Button } from "@material-ui/core";
-import { useTranslation } from "react-i18next";
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useState } from "react";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+} from "react-places-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentWeatherRequest } from "../redux/weather";
+import { TextField, makeStyles, Divider, Typography } from "@material-ui/core";
 import { RootState } from "../redux/rootReducer";
-import {
-  setSearchStatePlace,
-  setSearchStateCountryCode,
-} from "../redux/search";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   searchField: {
@@ -23,90 +23,85 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     color: "white",
+    width: "70vw",
   },
-  buttonContainer: {
-    alignItems: "center",
-    display: "flex",
+  suggestion: {
+    boxShadow: "1px 1px rgba(0,0,0,0.25)",
+    padding: theme.spacing(1),
+    paddingBottom: 0,
+    backgroundColor: "#2C2C2C",
   },
-  buttonRoot: {
-    height: 28,
+  suggestionsContainer: {
+    borderRadius: 8,
+    position: "absolute",
+    zIndex: 100,
+    top: 64,
+    left: 0,
   },
-  form: {
-    display: "flex",
-    flexDirection: "row",
+  searchBoxContainer: {
+    position: "relative",
   },
 }));
 
 export const SearchBar: React.FC = (): ReturnType<React.FC> => {
+  const dispatch = useDispatch();
+
+  const [address, setAddress] = useState("München, DE");
+
   const classes = useStyles();
 
-  const countryCode = useSelector(
-    (state: RootState) => state.search.countryCode
-  );
   const place = useSelector((state: RootState) => state.search.place);
 
   const { t } = useTranslation("place");
-  const dispatch = useDispatch();
 
-  const handlePlaceChange = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    dispatch(getCurrentWeatherRequest(place, countryCode));
+  const handleSelect = (selectedAddress: string): void => {
+    geocodeByAddress(selectedAddress).then((results) =>
+      dispatch(
+        getCurrentWeatherRequest({
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+        })
+      )
+    );
   };
 
   return (
     <div className={classes.searchFieldContainer}>
-      <form onSubmit={handlePlaceChange} className={classes.form}>
-        <TextField
-          className={classes.searchField}
-          id="place"
-          label={t("place")}
-          type="search"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            className: classes.input,
-          }}
-          classes={{
-            root: classes.textFieldRoot,
-          }}
-          onChange={(event) =>
-            dispatch(setSearchStatePlace(event.target.value))
-          }
-          value={place}
-        />
-        <TextField
-          className={classes.searchField}
-          id="country"
-          label={t("countryCode")}
-          type="search"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            className: classes.input,
-          }}
-          classes={{
-            root: classes.textFieldRoot,
-          }}
-          onChange={(event) =>
-            dispatch(setSearchStateCountryCode(event.target.value))
-          }
-          value={countryCode}
-        />
-        <div className={classes.buttonContainer}>
-          <Button
-            variant="outlined"
-            type="submit"
-            color="secondary"
-            classes={{
-              root: classes.buttonRoot,
-            }}
-          >
-            {t("send")}
-          </Button>
-        </div>
-      </form>
+      <PlacesAutocomplete
+        value={address}
+        onChange={(event) => setAddress(event)}
+        onSelect={handleSelect}
+      >
+        {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+          <div className={classes.searchBoxContainer}>
+            <TextField
+              className={classes.searchField}
+              id="place"
+              label={t("place")}
+              type="search"
+              InputProps={getInputProps({ className: classes.input })}
+              classes={{
+                root: classes.textFieldRoot,
+              }}
+              value={place}
+            />
+            <div className={classes.suggestionsContainer}>
+              {suggestions.map((suggestion) => {
+                return (
+                  <div
+                    {...getSuggestionItemProps(suggestion, {
+                      className: classes.suggestion,
+                    })}
+                  >
+                    <Typography>{suggestion.description}</Typography>
+                    <Divider />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </PlacesAutocomplete>
     </div>
   );
 };
