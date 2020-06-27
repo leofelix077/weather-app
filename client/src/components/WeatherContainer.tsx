@@ -100,7 +100,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
       setSelectedDay(
         moment
           .unix(weatherData.list[0].dt)
-          .utcOffset(weatherData.city.timezone)
+          .utcOffset(weatherData.city.timezone / 60)
           .startOf("day")
           .unix()
       );
@@ -145,7 +145,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
       (dataPoint: WeatherDataPoint) =>
         moment
           .unix(dataPoint.dt)
-          .utcOffset(weatherData.city.timezone)
+          .utcOffset(weatherData.city.timezone / 60)
           .startOf("day")
           .unix()
     );

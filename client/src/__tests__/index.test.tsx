@@ -25,13 +25,13 @@ describe("Should render each weather block with correct temperature", () => {
       (dataPoint: WeatherDataPoint) =>
         moment
           .unix(dataPoint.dt)
-          .utcOffset(weatherData.city.timezone)
+          .utcOffset(weatherData.city.timezone / 60)
           .startOf("day")
           .unix()
     );
     const selectedDay = moment
       .unix(weatherData.list[0].dt)
-      .utcOffset(weatherData.city.timezone)
+      .utcOffset(weatherData.city.timezone / 60)
       .startOf("day")
       .unix();
 

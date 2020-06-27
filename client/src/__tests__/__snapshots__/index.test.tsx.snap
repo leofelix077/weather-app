@@ -51,7 +51,7 @@ exports[`Should render each weather block with correct temperature renders Weath
         },
       ]
     }
-    day={1593043200}
+    day={1593036000}
     isSelected={true}
     utcOffset={7200}
   >
