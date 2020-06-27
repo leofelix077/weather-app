@@ -189,11 +189,11 @@ function* weatherApiSaga(action: WeatherLocation): any {
         url: createWeatherApiCall(place, isoCountryCode),
       });
       yield delay(500); // simulate longer request
-      yield put(setLastSearchState(isoCountryCode, place));
       yield put(getCurrentWeatherSuccess(response));
     } catch (error) {
-      console.log(error);
       yield put(getCurrentWeatherError(error.message));
+    } finally {
+      yield put(setLastSearchState(isoCountryCode, place));
     }
   } else {
     yield put(getCurrentWeatherCancel());
