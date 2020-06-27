@@ -100,7 +100,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
       setSelectedDay(
         moment
           .unix(weatherData.list[0].dt)
-          .utcOffset(weatherData.city.timezone)
+          .utcOffset(weatherData.city.timezone / 60)
           .startOf("day")
           .unix()
       );
@@ -111,11 +111,21 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
   const { error, processing } = useSelector(
     (state: RootState) => state.weather.request
   );
+
+  const loadingOverlay = (
+    <div className={classes.loadingOverlay}>
+      <div className={classes.loadingMargin}>
+        <Loading />
+      </div>
+    </div>
+  );
+
   if (error) {
     return (
       <div>
         <SearchBar />
         <Error error={error} />
+        {processing && loadingOverlay}
       </div>
     );
   }
@@ -135,7 +145,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
       (dataPoint: WeatherDataPoint) =>
         moment
           .unix(dataPoint.dt)
-          .utcOffset(weatherData.city.timezone)
+          .utcOffset(weatherData.city.timezone / 60)
           .startOf("day")
           .unix()
     );
@@ -236,13 +246,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
           </Grid>
         </>
       )}
-      {processing && (
-        <div className={classes.loadingOverlay}>
-          <div className={classes.loadingMargin}>
-            <Loading />
-          </div>
-        </div>
-      )}
+      {processing && loadingOverlay}
     </div>
   );
 };

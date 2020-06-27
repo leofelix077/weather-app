@@ -1410,6 +1410,8 @@ export const getRootStateMock = (
   search: {
     countryCode: "DE",
     place: "München",
+    lastPlace: "",
+    lastCountryCode: "",
   },
   temperature: {
     temperature: SupportedTemperature.Celsius,

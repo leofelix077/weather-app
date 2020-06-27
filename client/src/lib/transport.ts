@@ -37,6 +37,9 @@ export async function transport(params: RequestParams): Promise<Response> {
     let error;
     try {
       error = await response.json();
+      if (error?.cod === "404") {
+        error.message = i18next.t("errors:place-not-found");
+      }
     } catch (innerError) {
       throw new Error(i18next.t("errors:network"));
     }

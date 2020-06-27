@@ -1,16 +1,19 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
-import { takeEvery, put, call, delay } from "redux-saga/effects";
+import { takeEvery, put, call, delay, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import produce from "immer";
 import { transport } from "../lib/transport";
 import { createWeatherApiCall } from "../lib/api";
+import { RootState } from "./rootReducer";
+import { setLastSearchState } from "./search";
 
 // types
 export const GET_WEATHER = {
   REQUEST: "GET_WEATHER.REQUEST",
   SUCCESS: "GET_WEATHER.SUCCESS",
   ERROR: "GET_WEATHER.ERROR",
+  CANCEL: "GET_WEATHER.CANCEL",
 };
 
 interface WeatherLocation {
@@ -111,6 +114,13 @@ export const getCurrentWeatherError = (
   type: GET_WEATHER.ERROR,
   error,
 });
+interface GetCurrentWeatherCancel {
+  type: typeof GET_WEATHER.CANCEL;
+}
+
+export const getCurrentWeatherCancel = (): GetCurrentWeatherCancel => ({
+  type: GET_WEATHER.CANCEL,
+});
 
 // reducer
 interface WeatherForecast {
@@ -152,7 +162,11 @@ export function weatherReducer(
         newState.weatherForecast = null;
         newState.request.error = action.error;
         newState.request.success = false;
-        newState.request.processing = action.false;
+        newState.request.processing = false;
+      });
+    case GET_WEATHER.CANCEL:
+      return produce(state, (newState) => {
+        newState.request.processing = false;
       });
     default:
       return state;
@@ -164,14 +178,25 @@ export function weatherReducer(
 function* weatherApiSaga(action: WeatherLocation): any {
   const { place, isoCountryCode } = action;
 
-  try {
-    const response: WeatherData = yield call(transport, {
-      url: createWeatherApiCall(place, isoCountryCode),
-    });
-    yield delay(500); // simulate longer request
-    yield put(getCurrentWeatherSuccess(response));
-  } catch (error) {
-    yield put(getCurrentWeatherError(error.message));
+  const lastPlace = yield select((state: RootState) => state.search.lastPlace);
+  const lastCountryCode = yield select(
+    (state: RootState) => state.search.lastCountryCode
+  );
+
+  if (place !== lastPlace || isoCountryCode !== lastCountryCode) {
+    try {
+      const response: WeatherData = yield call(transport, {
+        url: createWeatherApiCall(place, isoCountryCode),
+      });
+      yield delay(500); // simulate longer request
+      yield put(getCurrentWeatherSuccess(response));
+    } catch (error) {
+      yield put(getCurrentWeatherError(error.message));
+    } finally {
+      yield put(setLastSearchState(isoCountryCode, place));
+    }
+  } else {
+    yield put(getCurrentWeatherCancel());
   }
 }
 
