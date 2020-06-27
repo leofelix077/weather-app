@@ -21,6 +21,7 @@ import { WeatherGraph } from "./WeatherGraph";
 import { SearchBar } from "./SearchBar";
 import RadioTemperatureSelector from "./RadioTemperatureSelector";
 import { Dictionary } from "lodash";
+import { formatSelectedDay } from "../lib/formatWeatherData";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -143,11 +144,7 @@ const WeatherContainer: React.FC = (): ReturnType<React.FC> => {
     formattedWeatherData = groupBy(
       weatherData.list,
       (dataPoint: WeatherDataPoint) =>
-        moment
-          .unix(dataPoint.dt)
-          .utcOffset(weatherData.city.timezone / 60)
-          .startOf("day")
-          .unix()
+        formatSelectedDay(dataPoint.dt, weatherData.city.timezone)
     );
   }
 

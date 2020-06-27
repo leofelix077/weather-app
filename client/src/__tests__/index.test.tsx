@@ -2,14 +2,15 @@ import React from "react";
 import { mount } from "enzyme";
 import { describe, expect, it } from "@jest/globals";
 import WeatherBlock from "../components/WeatherBlock";
-import groupBy from "lodash/groupBy";
 import { getRootStateMock } from "../testData/data";
-import { WeatherDataPoint, WeatherData } from "../redux/weather";
-import moment from "moment";
+import { getRootStateMockDifferentLocale } from "../testData/dataDifferentLocale";
+import { WeatherData } from "../redux/weather";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
 import "jsdom-global/register";
 import mockdate from "mockdate";
+import { WeatherGraph } from "../components/WeatherGraph";
+import { formatWeatherData, formatSelectedDay } from "../lib/formatWeatherData";
 
 const mockStore = configureMockStore();
 
@@ -20,20 +21,12 @@ describe("Should render each weather block with correct temperature", () => {
 
     const weatherData = store.weather.weatherForecast as WeatherData;
 
-    const formattedWeatherData = groupBy(
-      weatherData.list,
-      (dataPoint: WeatherDataPoint) =>
-        moment
-          .unix(dataPoint.dt)
-          .utcOffset(weatherData.city.timezone / 60)
-          .startOf("day")
-          .unix()
+    const formattedWeatherData = formatWeatherData(weatherData);
+
+    const selectedDay = formatSelectedDay(
+      weatherData.list[0].dt,
+      weatherData.city.timezone
     );
-    const selectedDay = moment
-      .unix(weatherData.list[0].dt)
-      .utcOffset(weatherData.city.timezone / 60)
-      .startOf("day")
-      .unix();
 
     const storeProvider = mockStore(store);
 
@@ -53,5 +46,34 @@ describe("Should render each weather block with correct temperature", () => {
     expect(element.length).toBe(1);
     expect(element.children).toBeDefined();
     expect((element as any).props().children.join("")).toBe("18 °C");
+  });
+
+  it("renders WeatherGraph correctly for differentLocale", () => {
+    mockdate.set(1593118700000);
+    const store = getRootStateMockDifferentLocale();
+
+    const weatherData = store.weather.weatherForecast as WeatherData;
+
+    const formattedWeatherData = formatWeatherData(weatherData);
+
+    const selectedDay = formatSelectedDay(
+      weatherData.list[0].dt,
+      weatherData.city.timezone
+    );
+
+    const storeProvider = mockStore(store);
+
+    const wrapper = mount(
+      <Provider store={storeProvider}>
+        <WeatherGraph
+          data={formattedWeatherData[selectedDay]}
+          utcOffset={weatherData.city.timezone}
+        />
+      </Provider>
+    );
+    expect(wrapper.props()).toMatchSnapshot();
+    const element = wrapper.find("Bar").props();
+    expect((element as any).data.labels.slice(1)).not.toContain("00:00");
+    expect((element as any).data.labels).toMatchSnapshot();
   });
 });
